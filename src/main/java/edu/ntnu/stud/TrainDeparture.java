@@ -36,6 +36,7 @@ public class TrainDeparture {
      * An integer that describes which track the train-departure is running on.
      * If the track is not defined the value is set to -1.
      * It is an int because the track is represented by a whole number.
+     * Once a track is defined, it can not be changed.
      */
     private int track=-1;
     /**
@@ -43,6 +44,12 @@ public class TrainDeparture {
      * A localTime object will make it easier to do operations regarding time.
      */
     private LocalTime delay;
+
+    /**
+     * A boolean that describes if the track has been set or not.
+     * It is a boolean because the track is either set, or it is not.
+     */
+    private boolean trackIsSet = false;
 
     /**
      * Validates that the departureTime, line and trainNumber parameter is in the right format.
@@ -75,11 +82,16 @@ public class TrainDeparture {
 
     /**
      * Checks if the given track is a positive integer, and throws IllegalArgumentException if it's not.
+     * It will also throw IllegalArgumentException if the track has already been set.
      * @param track a positive integer
      */
     public void checkTrack(int track) {
         if (track<1) {
             throw new IllegalArgumentException("The track must be a positive integer!");
+        }
+
+        if (trackIsSet){
+            throw new IllegalArgumentException("The track has already been set!");
         }
     }
     /**
@@ -110,6 +122,7 @@ public class TrainDeparture {
         this(departureTime, line, trainNumber, destination);
         checkTrack(track);
         this.track=track;
+        trackIsSet=true;
     }
 
     public LocalTime getDepartureTime() {
@@ -139,6 +152,7 @@ public class TrainDeparture {
     public void setTrack(int track) {
         checkTrack(track);
         this.track = track;
+        trackIsSet=true;
     }
 
     public void setDelay(LocalTime delay) {
