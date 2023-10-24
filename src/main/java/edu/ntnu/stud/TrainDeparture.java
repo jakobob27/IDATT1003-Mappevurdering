@@ -210,6 +210,6 @@ public class TrainDeparture {
   @Override
   public String toString() {
     return "Line " + getLine() + " with train-number " + getTrainNumber() + " to "
-        + getDestination() + " on track number " + getTrack() + "departs at " + getDepartureTime();
+        + getDestination() + " on track number " + getTrack() + " departs at " + getDepartureTime();
   }
 }
