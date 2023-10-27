@@ -66,7 +66,7 @@ public class TrainDeparture {
   private boolean trackIsSet = false;
 
   /**
-   * Validates that the departureTime, line and trainNumber parameter is in the right format.
+   * Validates that the departureTime and trainNumber parameter is in the right format.
    *
    * <p>The other fields in this object are in their correct format as given that
    * they are their designated type.
@@ -75,26 +75,14 @@ public class TrainDeparture {
    * is not in the right format.
    *
    * @param departureTime a localTime object that cannot contain time-units lower than minutes
-   * @param line          a String where the first character is not a number,
-   *                      but all the other characters is a number.
    * @param trainNumber   a String where all the characters are numbers
    *
    * @throws IllegalArgumentException if one of the parameters are not in a valid format
    */
-  private void validator(LocalTime departureTime, String line, String trainNumber) {
+  private void validator(LocalTime departureTime, String trainNumber) {
     if (departureTime.getSecond() != 0 || departureTime.getNano() != 0) {
       throw new IllegalArgumentException(
           "departureTime cannot contain time-units lower than minutes!");
-    }
-    String lastPart = line.substring(1);
-    if (Character.isDigit(line.charAt(0))) {
-      throw new IllegalArgumentException("The first character for the line can't be a number!");
-    }
-    for (int i = 0; i < lastPart.length(); i++) {
-      if (!Character.isDigit(lastPart.charAt(i))) {
-        throw new IllegalArgumentException(
-            "Every character after the first for the line must be a number!");
-      }
     }
 
     for (int i = 0; i < trainNumber.length(); i++) {
@@ -128,14 +116,13 @@ public class TrainDeparture {
    * A constructor for a TrainDeparture object that doesn't define which track it is on.
    *
    * @param departureTime a localTime object that cannot contain time-units lower than minutes
-   * @param line          a String where the first character is not a number,
-   *                      but all the other characters is a number.
+   * @param line          a String that describes the line
    * @param trainNumber   a String where all the characters are numbers
    * @param destination   a String that describes the destination
    */
   public TrainDeparture(LocalTime departureTime, String line, String trainNumber,
                         String destination) {
-    validator(departureTime, line, trainNumber);
+    validator(departureTime, trainNumber);
     this.departureTime = departureTime;
     this.line = line;
     this.trainNumber = trainNumber;
@@ -147,8 +134,7 @@ public class TrainDeparture {
    * when creating a TrainDeparture object.
    *
    * @param departureTime a localTime object that cannot contain time-units lower than minutes
-   * @param line          a String where the first character is not a number,
-   *                      but all the other characters is a number.
+   * @param line          a String that describes the line
    * @param trainNumber   a String where all the characters are numbers
    * @param destination   a String that describes the destination
    * @param track         a positive int that describes which track the train-departure is on.

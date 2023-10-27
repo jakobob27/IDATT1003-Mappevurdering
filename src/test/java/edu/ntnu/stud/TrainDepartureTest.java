@@ -41,18 +41,6 @@ public class TrainDepartureTest {
     assertEquals(departureTimeException.getMessage(),
         "departureTime cannot contain time-units lower than minutes!");
 
-    Exception firstLineException = assertThrows(IllegalArgumentException.class, () -> {
-      new TrainDeparture(LocalTime.of(13, 25), "314", "608", "Drammen");
-    }, "Validator should throw");
-    assertEquals(firstLineException.getMessage(),
-        "The first character for the line can't be a number!");
-
-    Exception secondLineException = assertThrows(IllegalArgumentException.class, () -> {
-      new TrainDeparture(LocalTime.of(13, 25), "FF15", "608", "Drammen");
-    }, "Validator should throw");
-    assertEquals(secondLineException.getMessage(),
-        "Every character after the first for the line must be a number!");
-
     Exception trainNumberException = assertThrows(IllegalArgumentException.class, () -> {
       new TrainDeparture(LocalTime.of(13, 25), "F14", "FF15",
           "Drammen");
