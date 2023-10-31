@@ -3,66 +3,48 @@ package edu.ntnu.stud;
 import java.time.LocalTime;
 
 /**
- * The TrainDeparture class is responsible for storing information
- * stored within a specific train-departure.
+ * The TrainDeparture class is responsible for storing information stored within a specific
+ * train-departure.
  *
  * <p>It also has the responsibility of making sure that the information given when creating a
  * new train-departure is both valid and correctly formatted.
  *
  * <p>If given an invalid parameter when constructing an object of the class,
  * it will throw a IllegalArgumentException with an explanatory message.
+ *
+ * <p>The class has the following fields:
+ *
+ * <p>departureTime - A final localTime object
+ * that describes the time the train departs in the format HH:mm
+ *
+ * <p>line - A final string that defines the route the train is running
+ * in the format of "L1", "F4" etc.
+ *
+ * <p>trainNumber - A final string
+ * with a unique number within a 24-hour window in the format "602", "45", "1951" etc.
+ *
+ * <p>destination -  A final string that describes the train-departures destination.
+ *
+ * <p>track - An integer that describes which track the train-departure is running on.
+ * If the track is not defined the value is set to -1. Once a track is defined, it can not be
+ * changed.
+ *
+ * <p>delay - A localTime object that describes the delay of the train in the format HH:mm.
+ *
+ * <p>trackIsSet - A boolean that describes if the track has been set or not.
+ *
+ * @author Jakob Huuse
+ * @version 1.0.0
+ * @since 31.10.2023
  */
 public class TrainDeparture {
-  /**
-   * A final localTime object that describes the time the train departs in the format HH:mm
-   *
-   * <p>A LocalTime object will make it easier to both format and do operations regarding time.
-   * The field is final because the planned departureTime won't change, only they amount of delay.
-   */
-  private final LocalTime departureTime;
-  /**
-   * A final string that defines the route the train is running in the format of "L1", "F4" etc.
-   *
-   * <p>It is a String because the task specified that the field is a text.
-   * The field is final because a train-departure won't change its line mid-departure.
-   */
-  private final String line;
-  /**
-   * A final string with a unique number within a 24-hour window in the format "602", "45", "1951"
-   * etc.
-   *
-   * <p>It is a String because the task specified that the field is a text.
-   * The field is final because a train-departure won't change its number mid-departure.
-   */
-  private final String trainNumber;
-  /**
-   * A final string that describes the train-departures' destination.
-   *
-   * <p>It is a String because the destination is a noun.
-   * The field is final because a train-departure won't change its destination.
-   */
-  private final String destination;
-  /**
-   * An integer that describes which track the train-departure is running on.
-   *
-   * <p>If the track is not defined the value is set to -1.
-   * Once a track is defined, it can not be changed.
-   *
-   * <p>It is an int because the track is represented by a whole number.
-   */
-  private int track = -1;
-  /**
-   * A localTime object that describes the delay of the train in the format HH:mm.
-   *
-   * <p>A localTime object will make it easier to do operations regarding time.
-   */
-  private LocalTime delay;
 
-  /**
-   * A boolean that describes if the track has been set or not.
-   *
-   * <p>It is a boolean because the track is either set, or it is not.
-   */
+  private final LocalTime departureTime;
+  private final String line;
+  private final String trainNumber;
+  private final String destination;
+  private int track = -1;
+  private LocalTime delay;
   private boolean trackIsSet = false;
 
   /**
@@ -76,7 +58,6 @@ public class TrainDeparture {
    *
    * @param departureTime a localTime object that cannot contain time-units lower than minutes
    * @param trainNumber   a String where all the characters are numbers
-   *
    * @throws IllegalArgumentException if one of the parameters are not in a valid format
    */
   private void validator(LocalTime departureTime, String trainNumber) {
@@ -93,14 +74,14 @@ public class TrainDeparture {
   }
 
   /**
-   * Checks if the given track is a positive integer,
-   * and throws IllegalArgumentException if it's not.
+   * Checks if the given track is a positive integer, and throws IllegalArgumentException if it's
+   * not.
    *
    * <p>It will also throw IllegalArgumentException if the track has already been set.
    *
    * @param track a positive integer
-   * @throws IllegalArgumentException if the int given is not a positive integer
-   *                                  or track has already been set.
+   * @throws IllegalArgumentException if the int given is not a positive integer or track has
+   *                                  already been set.
    */
   public void checkTrack(int track) {
     if (track < 1) {
@@ -121,7 +102,7 @@ public class TrainDeparture {
    * @param destination   a String that describes the destination
    */
   public TrainDeparture(LocalTime departureTime, String line, String trainNumber,
-                        String destination) {
+      String destination) {
     validator(departureTime, trainNumber);
     this.departureTime = departureTime;
     this.line = line;
@@ -130,8 +111,8 @@ public class TrainDeparture {
   }
 
   /**
-   * Another constructor for when you want to define the track
-   * when creating a TrainDeparture object.
+   * Another constructor for when you want to define the track when creating a TrainDeparture
+   * object.
    *
    * @param departureTime a localTime object that cannot contain time-units lower than minutes
    * @param line          a String that describes the line
@@ -140,7 +121,7 @@ public class TrainDeparture {
    * @param track         a positive int that describes which track the train-departure is on.
    */
   public TrainDeparture(LocalTime departureTime, String line, String trainNumber,
-                        String destination, int track) {
+      String destination, int track) {
     this(departureTime, line, trainNumber, destination);
     checkTrack(track);
     this.track = track;
@@ -187,9 +168,9 @@ public class TrainDeparture {
   }
 
   /**
-   * toString method that prints the returns a string in the following format:
-   * "Line {line} with train-number {trainNumber} to {destination} on track number {track}
-   * departs at {departureTime}".
+   * toString method that prints the returns a string in the following format: "Line {line} with
+   * train-number {trainNumber} to {destination} on track number {track} departs at
+   * {departureTime}".
    *
    * @return String
    */
