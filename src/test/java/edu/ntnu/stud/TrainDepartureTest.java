@@ -1,14 +1,22 @@
 package edu.ntnu.stud;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.time.LocalTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalTime;
-
-import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * Test-class for the TrainDeparture class using JUnit.
+ *
+ * @author Jakob Huuse
+ * @version 1.0.0
+ * @since 31.10.2023
+ */
 public class TrainDepartureTest {
+
   TrainDeparture testObj;
   TrainDeparture secondTestObj;
 
@@ -35,16 +43,15 @@ public class TrainDepartureTest {
   @Test
   @DisplayName("Check if the validator works")
   void testValidator() {
-    Exception departureTimeException = assertThrows(IllegalArgumentException.class, () -> {
-      new TrainDeparture(LocalTime.of(13, 25, 22), "F14", "608", "Drammen");
-    }, "Validator should throw");
+    Exception departureTimeException = assertThrows(IllegalArgumentException.class,
+        () -> new TrainDeparture(LocalTime.of(13, 25, 22), "F14", "608", "Drammen"),
+        "Validator should throw");
     assertEquals(departureTimeException.getMessage(),
         "departureTime cannot contain time-units lower than minutes!");
 
-    Exception trainNumberException = assertThrows(IllegalArgumentException.class, () -> {
-      new TrainDeparture(LocalTime.of(13, 25), "F14", "FF15",
-          "Drammen");
-    }, "Validator should throw");
+    Exception trainNumberException = assertThrows(IllegalArgumentException.class,
+        () -> new TrainDeparture(LocalTime.of(13, 25), "F14", "FF15",
+            "Drammen"), "Validator should throw");
     assertEquals(trainNumberException.getMessage(),
         "Every character in the trainNumber must be a number!");
   }
@@ -52,15 +59,13 @@ public class TrainDepartureTest {
   @Test
   @DisplayName("Check if checkTrack works")
   void testCheckTrack() {
-    Exception checkTrackException = assertThrows(IllegalArgumentException.class, () -> {
-      testObj.setTrack(0);
-    });
+    Exception checkTrackException = assertThrows(IllegalArgumentException.class,
+        () -> testObj.setTrack(0));
     assertEquals(checkTrackException.getMessage(),
         "The track must be a positive integer!");
 
-    Exception checkSetTrackException = assertThrows(IllegalArgumentException.class, () -> {
-      secondTestObj.setTrack(3);
-    });
+    Exception checkSetTrackException = assertThrows(IllegalArgumentException.class,
+        () -> secondTestObj.setTrack(3));
     assertEquals(checkSetTrackException.getMessage(), "The track has already been set!");
 
     testObj.setTrack(1);
@@ -70,8 +75,8 @@ public class TrainDepartureTest {
   @Test
   @DisplayName("Check if the toString() method works")
   void testToString() {
-    assertEquals("Line F14 with train-number 608 to Drammen on track number -1" +
-            " departs at 13:25", testObj.toString(),
+    assertEquals("Line F14 with train-number 608 to Drammen on track number -1"
+            + " departs at 13:25", testObj.toString(),
         "The given string should be equal to testObj.toString()");
   }
 }

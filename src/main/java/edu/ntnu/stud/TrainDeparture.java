@@ -153,7 +153,7 @@ public class TrainDeparture {
   }
 
   /**
-   * Checks if the given int is valid, then sets the track to the given int.
+   * Checks if the parameter is valid, then sets the track to the parameter.
    *
    * @param track a positive integer
    */
