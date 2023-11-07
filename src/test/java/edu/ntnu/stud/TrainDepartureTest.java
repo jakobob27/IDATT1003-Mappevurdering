@@ -11,11 +11,14 @@ import org.junit.jupiter.api.Test;
 /**
  * Test-class for the TrainDeparture class using JUnit.
  *
+ * <p>Before each test two constructors with valid parameters will run.
+ * These will be used as test objects where applicable.
+ *
  * <p>It tests the constructor by checking if all the values given
- * is correctly set for both constructors
+ * is correctly set for both constructors.
  *
  * <p>It then tests if the validator works by checking if it throws an IllegalArgumentException
- * when giving the constructor invalid parameters
+ * when giving the constructor invalid parameters.
  *
  * <p>It tests the checkTrack method by firstly checking if it throws an IllegalArgumentException
  * if giving it an invalid track parameter in the setTrack() method. It then tests if the track
@@ -34,7 +37,7 @@ public class TrainDepartureTest {
   TrainDeparture secondTestObj;
 
   @BeforeEach
-  void setUp() {
+  void setup() {
     testObj = new TrainDeparture(LocalTime.of(13, 25), "F14", "608", "Drammen");
     secondTestObj = new TrainDeparture(LocalTime.of(15, 15), "F22", "1337", "Trondheim", 2);
   }

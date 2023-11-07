@@ -9,6 +9,9 @@ import java.util.HashMap;
  * The TrainDepartureRegister class is responsible for managing a collection
  * of TrainDeparture objects.
  *
+ * <p>It has only one field, called register. The register is a hashmap where the keys are
+ * a String with the train number to the TrainDeparture value attached to the key.
+ *
  * @author Jakob Huuse
  * @version 1.0.0
  * @since 07.11.2023
@@ -38,14 +41,15 @@ public class TrainDepartureRegister {
   }
 
   /**
-   * Finds the trainDeparture object with the given train number in the register.
+   * Searches after the trainDeparture object with the given train number in the register.
    *
    * @param trainNumber A string that describes the train number
    *                    for the TrainDeparture object you want to find
-   * @return The TrainDeparture object with the given train number
+   * @return The TrainDeparture object with the given train number,
+   *        if there is no TrainDeparture with the given train number, returns null
    */
   public TrainDeparture searchTrainNumber(String trainNumber) {
-    return register.get(trainNumber);
+    return register.getOrDefault(trainNumber, null);
   }
 
   /**
@@ -70,7 +74,7 @@ public class TrainDepartureRegister {
 
   /**
    * Removes expired TrainDeparture objects from the register
-   * by iterating over the TrainDeparture objects in the register
+   * by iterating over a copy the TrainDeparture objects in the register
    * and checks if the departureTime plus the delay is before the given time.
    * If it is, it is removed from the register.
    *
@@ -78,7 +82,8 @@ public class TrainDepartureRegister {
    *             will be removed if it is after the TrainDeparture objects departureTime with delay.
    */
   public void removeExpiredDepartures(LocalTime time) {
-    for (TrainDeparture departure : register.values()) {
+    HashMap<String, TrainDeparture> registerCopy = new HashMap<>(register);
+    for (TrainDeparture departure : registerCopy.values()) {
       if (departure.getDepartureTime().plusMinutes(departure.getDelay()).isBefore(time)) {
         register.remove(departure.getTrainNumber());
       }
