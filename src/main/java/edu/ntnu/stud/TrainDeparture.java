@@ -31,10 +31,8 @@ import java.time.LocalTime;
  *
  * <p>delay - A localTime object that describes the delay of the train in the format HH:mm.
  *
- * <p>trackIsSet - A boolean that describes if the track has been set or not.
- *
  * @author Jakob Huuse
- * @version 1.0.0
+ * @version 1.0.1
  * @since 31.10.2023
  */
 public class TrainDeparture {
@@ -45,7 +43,7 @@ public class TrainDeparture {
   private final String destination;
   private int track = -1;
   private LocalTime delay;
-  private boolean trackIsSet = false;
+
 
   /**
    * Validates that the departureTime and trainNumber parameter is in the right format.
@@ -77,8 +75,6 @@ public class TrainDeparture {
    * Checks if the given track is a positive integer, and throws IllegalArgumentException if it's
    * not.
    *
-   * <p>It will also throw IllegalArgumentException if the track has already been set.
-   *
    * @param track a positive integer
    * @throws IllegalArgumentException if the int given is not a positive integer or track has
    *                                  already been set.
@@ -86,10 +82,6 @@ public class TrainDeparture {
   public void checkTrack(int track) {
     if (track < 1) {
       throw new IllegalArgumentException("The track must be a positive integer!");
-    }
-
-    if (trackIsSet) {
-      throw new IllegalArgumentException("The track has already been set!");
     }
   }
 
@@ -125,7 +117,6 @@ public class TrainDeparture {
     this(departureTime, line, trainNumber, destination);
     checkTrack(track);
     this.track = track;
-    trackIsSet = true;
   }
 
   public LocalTime getDepartureTime() {
@@ -160,7 +151,6 @@ public class TrainDeparture {
   public void setTrack(int track) {
     checkTrack(track);
     this.track = track;
-    trackIsSet = true;
   }
 
   public void setDelay(LocalTime delay) {

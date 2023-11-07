@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
  * Test-class for the TrainDeparture class using JUnit.
  *
  * @author Jakob Huuse
- * @version 1.0.0
+ * @version 1.0.1
  * @since 31.10.2023
  */
 public class TrainDepartureTest {
@@ -63,10 +63,6 @@ public class TrainDepartureTest {
         () -> testObj.setTrack(0));
     assertEquals(checkTrackException.getMessage(),
         "The track must be a positive integer!");
-
-    Exception checkSetTrackException = assertThrows(IllegalArgumentException.class,
-        () -> secondTestObj.setTrack(3));
-    assertEquals(checkSetTrackException.getMessage(), "The track has already been set!");
 
     testObj.setTrack(1);
     assertEquals(1, testObj.getTrack());
