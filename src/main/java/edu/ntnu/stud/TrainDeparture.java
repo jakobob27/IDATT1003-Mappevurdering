@@ -26,8 +26,7 @@ import java.time.LocalTime;
  * <p>destination -  A final string that describes the train-departures destination.
  *
  * <p>track - An integer that describes which track the train-departure is running on.
- * If the track is not defined the value is set to -1. Once a track is defined, it can not be
- * changed.
+ * If the track is not defined the value is set to -1.
  *
  * <p>delay - A localTime object that describes the delay of the train in the format HH:mm.
  *
@@ -55,20 +54,14 @@ public class TrainDeparture {
    * is not in the right format.
    *
    * @param departureTime a localTime object that cannot contain time-units lower than minutes
-   * @param trainNumber   a String where all the characters are numbers
    * @throws IllegalArgumentException if one of the parameters are not in a valid format
    */
-  private void validator(LocalTime departureTime, String trainNumber) {
+  private void validator(LocalTime departureTime) {
     if (departureTime.getSecond() != 0 || departureTime.getNano() != 0) {
       throw new IllegalArgumentException(
           "departureTime cannot contain time-units lower than minutes!");
     }
 
-    for (int i = 0; i < trainNumber.length(); i++) {
-      if (!Character.isDigit(trainNumber.charAt(i))) {
-        throw new IllegalArgumentException("Every character in the trainNumber must be a number!");
-      }
-    }
   }
 
   /**
@@ -90,12 +83,12 @@ public class TrainDeparture {
    *
    * @param departureTime a localTime object that cannot contain time-units lower than minutes
    * @param line          a String that describes the line
-   * @param trainNumber   a String where all the characters are numbers
+   * @param trainNumber   a String that describes the train number
    * @param destination   a String that describes the destination
    */
   public TrainDeparture(LocalTime departureTime, String line, String trainNumber,
       String destination) {
-    validator(departureTime, trainNumber);
+    validator(departureTime);
     this.departureTime = departureTime;
     this.line = line;
     this.trainNumber = trainNumber;
@@ -108,7 +101,7 @@ public class TrainDeparture {
    *
    * @param departureTime a localTime object that cannot contain time-units lower than minutes
    * @param line          a String that describes the line
-   * @param trainNumber   a String where all the characters are numbers
+   * @param trainNumber   a String that describes the train number
    * @param destination   a String that describes the destination
    * @param track         a positive int that describes which track the train-departure is on.
    */

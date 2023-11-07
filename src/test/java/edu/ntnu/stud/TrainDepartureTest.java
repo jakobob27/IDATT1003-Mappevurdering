@@ -49,11 +49,6 @@ public class TrainDepartureTest {
     assertEquals(departureTimeException.getMessage(),
         "departureTime cannot contain time-units lower than minutes!");
 
-    Exception trainNumberException = assertThrows(IllegalArgumentException.class,
-        () -> new TrainDeparture(LocalTime.of(13, 25), "F14", "FF15",
-            "Drammen"), "Validator should throw");
-    assertEquals(trainNumberException.getMessage(),
-        "Every character in the trainNumber must be a number!");
   }
 
   @Test
