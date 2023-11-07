@@ -60,7 +60,7 @@ public class TrainDepartureRegisterTest {
   }
 
   @Test
-  @DisplayName("Checks if adding a TrainDeparture works")
+  @DisplayName("Check if adding a TrainDeparture works")
   void testAddTrainDeparture() {
     assertEquals(testDeparture1, testObj.searchTrainNumber("608"));
 
@@ -73,14 +73,14 @@ public class TrainDepartureRegisterTest {
   }
 
   @Test
-  @DisplayName("Checks if searching by train number works")
+  @DisplayName("Check if searching by train number works")
   void testSearchTrainNumber() {
     assertEquals(testDeparture1, testObj.searchTrainNumber("608"));
     assertNull(testObj.searchTrainNumber("607"));
   }
 
   @Test
-  @DisplayName("Checks if searching by destination works")
+  @DisplayName("Check if searching by destination works")
   void testSearchDestination() {
     ArrayList<TrainDeparture> expectedArrayList = new ArrayList<>();
     expectedArrayList.add(testDeparture2);
@@ -90,7 +90,7 @@ public class TrainDepartureRegisterTest {
   }
 
   @Test
-  @DisplayName("Checks if removing expired departures works")
+  @DisplayName("Check if removing expired departures works")
   void testRemoveExpiredDeparture() {
     ArrayList<TrainDeparture> expectedArrayList = new ArrayList<>();
     expectedArrayList.add(testDeparture2);
@@ -102,7 +102,7 @@ public class TrainDepartureRegisterTest {
   }
 
   @Test
-  @DisplayName("Checks if removing expired departures accounts for delay")
+  @DisplayName("Check if removing expired departures accounts for delay")
   void testRemoveExpiredDepartureDelay() {
     ArrayList<TrainDeparture> expectedArrayList = new ArrayList<>();
     expectedArrayList.add(testDeparture2);
@@ -113,7 +113,7 @@ public class TrainDepartureRegisterTest {
   }
 
   @Test
-  @DisplayName("Checks if the register sorts the TrainDeparture objects correctly")
+  @DisplayName("Check if the register sorts the TrainDeparture objects correctly")
   void testSortByTime() {
     ArrayList<TrainDeparture> expectedArrayList = new ArrayList<>();
     expectedArrayList.add(testDeparture3);

@@ -24,6 +24,11 @@ import org.junit.jupiter.api.Test;
  * if giving it an invalid track parameter in the setTrack() method. It then tests if the track
  * is set correctly when giving it a valid parameter.
  *
+ * <p>It tests the compareTo method by comparing the expected output when
+ * comparing the two test objects to the actual output. It also tests when comparing
+ * the two test objects the other way around. Finally, it checks if the method returns 0 when
+ * comparing to TrainDeparture objects with the same departureTime.
+ *
  * <p>Lastly, it checks if the toString() method works by checking if it gives the same String as
  * the expected output.
  *
@@ -77,6 +82,18 @@ public class TrainDepartureTest {
 
     testObj.setTrack(1);
     assertEquals(1, testObj.getTrack());
+  }
+
+  @Test
+  @DisplayName("Check if compareTo works")
+  void testCompareTo() {
+    assertEquals(-1, testObj.compareTo(secondTestObj));
+    assertEquals(1, secondTestObj.compareTo(testObj));
+
+    TrainDeparture testSameDepartureTime =
+        new TrainDeparture(LocalTime.of(15, 15), "F21", "13", "Trondheim", 2);
+    assertEquals(0, secondTestObj.compareTo(testSameDepartureTime));
+
   }
 
   @Test
