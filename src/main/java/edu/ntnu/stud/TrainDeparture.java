@@ -28,20 +28,20 @@ import java.time.LocalTime;
  * <p>track - An integer that describes which track the train-departure is running on.
  * If the track is not defined the value is set to -1.
  *
- * <p>delay - A localTime object that describes the delay of the train in the format HH:mm.
+ * <p>delay - A long that describes the delay of the train in minutes
  *
  * @author Jakob Huuse
  * @version 1.0.1
- * @since 31.10.2023
+ * @since 07.11.2023
  */
-public class TrainDeparture {
+public class TrainDeparture implements Comparable<TrainDeparture> {
 
   private final LocalTime departureTime;
   private final String line;
   private final String trainNumber;
   private final String destination;
   private int track = -1;
-  private LocalTime delay;
+  private long delay;
 
 
   /**
@@ -132,7 +132,7 @@ public class TrainDeparture {
     return track;
   }
 
-  public LocalTime getDelay() {
+  public long getDelay() {
     return delay;
   }
 
@@ -146,7 +146,7 @@ public class TrainDeparture {
     this.track = track;
   }
 
-  public void setDelay(LocalTime delay) {
+  public void setDelay(long delay) {
     this.delay = delay;
   }
 
@@ -161,5 +161,24 @@ public class TrainDeparture {
   public String toString() {
     return "Line " + getLine() + " with train-number " + getTrainNumber() + " to "
         + getDestination() + " on track number " + getTrack() + " departs at " + getDepartureTime();
+  }
+
+  /**
+   * Implementation of the comparable interface.
+   * @param o the TrainDeparture object to be compared.
+   * @return -1 if this departureTime is before the other,
+   * 1 if this departureTime is after the other, and 0 if they are equal
+   */
+  @Override
+  public int compareTo(TrainDeparture o) {
+    if (this.getDepartureTime().isBefore(o.getDepartureTime())) {
+      return -1;
+    }
+    else if (this.getDepartureTime().isAfter(o.getDepartureTime())) {
+      return 1;
+    }
+    else {
+      return 0;
+    }
   }
 }
