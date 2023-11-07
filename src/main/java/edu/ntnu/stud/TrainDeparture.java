@@ -87,7 +87,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    * @param destination   a String that describes the destination
    */
   public TrainDeparture(LocalTime departureTime, String line, String trainNumber,
-      String destination) {
+                        String destination) {
     validator(departureTime);
     this.departureTime = departureTime;
     this.line = line;
@@ -106,7 +106,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    * @param track         a positive int that describes which track the train-departure is on.
    */
   public TrainDeparture(LocalTime departureTime, String line, String trainNumber,
-      String destination, int track) {
+                        String destination, int track) {
     this(departureTime, line, trainNumber, destination);
     checkTrack(track);
     this.track = track;
@@ -165,19 +165,18 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
 
   /**
    * Implementation of the comparable interface.
+   *
    * @param o the TrainDeparture object to be compared.
    * @return -1 if this departureTime is before the other,
-   * 1 if this departureTime is after the other, and 0 if they are equal
+   *        1 if this departureTime is after the other, and 0 if they are equal
    */
   @Override
   public int compareTo(TrainDeparture o) {
     if (this.getDepartureTime().isBefore(o.getDepartureTime())) {
       return -1;
-    }
-    else if (this.getDepartureTime().isAfter(o.getDepartureTime())) {
+    } else if (this.getDepartureTime().isAfter(o.getDepartureTime())) {
       return 1;
-    }
-    else {
+    } else {
       return 0;
     }
   }

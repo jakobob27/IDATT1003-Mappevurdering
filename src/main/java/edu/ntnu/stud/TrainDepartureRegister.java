@@ -24,10 +24,11 @@ public class TrainDepartureRegister {
   }
 
   /**
-   * Adds a TrainDeparture object to the register
+   * Adds a TrainDeparture object to the register.
+   *
    * @param departure A TrainDeparture object
    * @throws IllegalArgumentException If the given TrainDeparture uses the same train number
-   * of another departure that is in the register
+   *                                  of another departure that is in the register
    */
   public void addTrainDeparture(TrainDeparture departure) {
     if (register.containsKey(departure.getTrainNumber())) {
@@ -37,9 +38,10 @@ public class TrainDepartureRegister {
   }
 
   /**
-   * Finds the trainDeparture object with the given train number in the register
+   * Finds the trainDeparture object with the given train number in the register.
+   *
    * @param trainNumber A string that describes the train number
-   *                   for the TrainDeparture object you want to find
+   *                    for the TrainDeparture object you want to find
    * @return The TrainDeparture object with the given train number
    */
   public TrainDeparture searchTrainNumber(String trainNumber) {
@@ -51,13 +53,14 @@ public class TrainDepartureRegister {
    * by iterating over all the TrainDeparture objects in the register.
    * If the destination of a TrainDeparture object matches the given
    * destination it is added to a temporary ArrayList.
+   *
    * @param destination A string that describes
-   *                   the destination of the TrainDeparture objects you want to find
+   *                    the destination of the TrainDeparture objects you want to find
    * @return A temporary ArrayList containing the TrainDeparture objects with the given destination
    */
   public ArrayList<TrainDeparture> searchDestination(String destination) {
     ArrayList<TrainDeparture> temp = new ArrayList<>();
-    for (TrainDeparture departure: register.values()) {
+    for (TrainDeparture departure : register.values()) {
       if (departure.getDestination().equals(destination)) {
         temp.add(departure);
       }
@@ -70,11 +73,12 @@ public class TrainDepartureRegister {
    * by iterating over the TrainDeparture objects in the register
    * and checks if the departureTime plus the delay is before the given time.
    * If it is, it is removed from the register.
+   *
    * @param time A LocalTime object that determines which TrainDeparture objects
    *             will be removed if it is after the TrainDeparture objects departureTime with delay.
    */
-  public void removeExpiredDepartures (LocalTime time) {
-    for (TrainDeparture departure: register.values()){
+  public void removeExpiredDepartures(LocalTime time) {
+    for (TrainDeparture departure : register.values()) {
       if (departure.getDepartureTime().plusMinutes(departure.getDelay()).isBefore(time)) {
         register.remove(departure.getTrainNumber());
       }
@@ -83,6 +87,7 @@ public class TrainDepartureRegister {
 
   /**
    * Makes a temporary list and sorts the TrainDeparture objects.
+   *
    * @return A temporary ArrayList that is sorted by the objects departureTime
    */
   public ArrayList<TrainDeparture> sortByTime() {
