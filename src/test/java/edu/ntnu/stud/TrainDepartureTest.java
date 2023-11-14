@@ -99,8 +99,7 @@ public class TrainDepartureTest {
   @Test
   @DisplayName("Check if the toString() method works")
   void testToString() {
-    assertEquals("Line F14 with train-number 608 to Drammen on track number -1"
-            + " departs at 13:25", testObj.toString(),
+    assertEquals("13:25   F14   Drammen             -1", testObj.toString(),
         "The given string should be equal to testObj.toString()");
   }
 }

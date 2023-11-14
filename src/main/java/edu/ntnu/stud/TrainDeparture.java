@@ -137,6 +137,15 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
   }
 
   /**
+   * Method that adds the delay to the departureTime to get the actual departureTime.
+   *
+   * @return a LocalTime object describing departureTime with delay
+   */
+  public LocalTime getActualDepartureTime() {
+    return departureTime.plusMinutes(delay);
+  }
+
+  /**
    * Checks if the parameter is valid, then sets the track to the parameter.
    *
    * @param track a positive integer
@@ -151,16 +160,22 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
   }
 
   /**
-   * toString method that prints the returns a string in the following format: "Line {line} with
-   * train-number {trainNumber} to {destination} on track number {track} departs at
-   * {departureTime}".
+   * toString method that makes sure the spacing between the fields that are printed are consistent.
    *
    * @return String
    */
   @Override
   public String toString() {
-    return "Line " + getLine() + " with train-number " + getTrainNumber() + " to "
-        + getDestination() + " on track number " + getTrack() + " departs at " + getDepartureTime();
+    StringBuilder temp = new StringBuilder(getActualDepartureTime() + "   " + line);
+    while (temp.length() < 14) {
+      temp.append(" ");
+    }
+    temp.append(destination);
+    while (temp.length() < 34) {
+      temp.append(" ");
+    }
+    temp.append(track);
+    return temp.toString();
   }
 
   /**

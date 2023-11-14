@@ -75,7 +75,7 @@ public class TrainDepartureRegister {
   /**
    * Removes expired TrainDeparture objects from the register
    * by iterating over a copy the TrainDeparture objects in the register
-   * and checks if the departureTime plus the delay is before the given time.
+   * and checks if the actual departureTime is before the given time.
    * If it is, it is removed from the register.
    *
    * @param time A LocalTime object that determines which TrainDeparture objects
@@ -84,7 +84,7 @@ public class TrainDepartureRegister {
   public void removeExpiredDepartures(LocalTime time) {
     HashMap<String, TrainDeparture> registerCopy = new HashMap<>(register);
     for (TrainDeparture departure : registerCopy.values()) {
-      if (departure.getDepartureTime().plusMinutes(departure.getDelay()).isBefore(time)) {
+      if (departure.getActualDepartureTime().isBefore(time)) {
         register.remove(departure.getTrainNumber());
       }
     }
@@ -99,5 +99,10 @@ public class TrainDepartureRegister {
     ArrayList<TrainDeparture> temp = new ArrayList<>(register.values());
     Collections.sort(temp);
     return temp;
+  }
+
+  @Override
+  public String toString() {
+    return super.toString();
   }
 }
