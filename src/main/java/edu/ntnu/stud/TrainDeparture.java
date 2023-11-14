@@ -162,7 +162,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
   /**
    * toString method that makes sure the spacing between the fields that are printed are consistent.
    *
-   * @return String
+   * @return String representing this class
    */
   @Override
   public String toString() {

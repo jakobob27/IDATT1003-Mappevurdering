@@ -101,8 +101,19 @@ public class TrainDepartureRegister {
     return temp;
   }
 
+  /**
+   * Makes a title for departures and their track, then uses toString() on each TrainDeparture
+   * in the register and appends it on a new line.
+   *
+   * @return String representing this class
+   */
   @Override
   public String toString() {
-    return super.toString();
+    StringBuilder temp = new StringBuilder("Departures                        Track");
+    for (TrainDeparture departure: register.values()){
+      temp.append("\n");
+      temp.append(departure.toString());
+    }
+    return temp.toString();
   }
 }
