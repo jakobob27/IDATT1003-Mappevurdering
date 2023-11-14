@@ -69,7 +69,6 @@ public class TrainDepartureTest {
         "Validator should throw");
     assertEquals(departureTimeException.getMessage(),
         "departureTime cannot contain time-units lower than minutes!");
-
   }
 
   @Test
