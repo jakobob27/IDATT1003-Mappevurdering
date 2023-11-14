@@ -32,7 +32,7 @@ import java.time.LocalTime;
  *
  * @author Jakob Huuse
  * @version 1.0.1
- * @since 07.11.2023
+ * @since 14.11.2023
  */
 public class TrainDeparture implements Comparable<TrainDeparture> {
 
@@ -45,7 +45,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
 
 
   /**
-   * Validates that the departureTime and trainNumber parameter is in the right format.
+   * Validates that the departureTime is in the right format.
    *
    * <p>The other fields in this object are in their correct format as given that
    * they are their designated type.

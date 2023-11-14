@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Jakob Huuse
  * @version 1.0.1
- * @since 07.11.2023
+ * @since 14.11.2023
  */
 public class TrainDepartureTest {
 

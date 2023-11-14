@@ -14,9 +14,9 @@ import java.util.HashMap;
  *
  * @author Jakob Huuse
  * @version 1.0.0
- * @since 07.11.2023
+ * @since 14.11.2023
  */
-public class TrainDepartureRegister {
+public class TrainDepartureRegister implements TramClockListener {
   private final HashMap<String, TrainDeparture> register;
 
   /**
@@ -46,7 +46,7 @@ public class TrainDepartureRegister {
    * @param trainNumber A string that describes the train number
    *                    for the TrainDeparture object you want to find
    * @return The TrainDeparture object with the given train number,
-   *        if there is no TrainDeparture with the given train number, returns null
+   * if there is no TrainDeparture with the given train number, returns null
    */
   public TrainDeparture searchTrainNumber(String trainNumber) {
     return register.getOrDefault(trainNumber, null);
@@ -101,6 +101,11 @@ public class TrainDepartureRegister {
     return temp;
   }
 
+  @Override
+  public void update(LocalTime clock) {
+    removeExpiredDepartures(clock);
+  }
+
   /**
    * Makes a title for departures and their track, then uses toString() on each TrainDeparture
    * in the register and appends it on a new line.
@@ -111,10 +116,11 @@ public class TrainDepartureRegister {
   public String toString() {
     StringBuilder temp = new StringBuilder("Departures                        Track");
     temp.append("\n" + "---------------------------------------");
-    for (TrainDeparture departure: register.values()){
+    for (TrainDeparture departure : register.values()) {
       temp.append("\n");
       temp.append(departure.toString());
     }
+    temp.append("\n");
     return temp.toString();
   }
 }
