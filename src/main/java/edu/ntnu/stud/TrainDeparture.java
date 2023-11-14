@@ -174,7 +174,11 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
     while (temp.length() < 34) {
       temp.append(" ");
     }
-    temp.append(track);
+    if (track == -1) {
+      temp.append("undefined");
+    } else {
+      temp.append(track);
+    }
     return temp.toString();
   }
 
@@ -183,7 +187,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    *
    * @param o the TrainDeparture object to be compared.
    * @return -1 if this departureTime is before the other,
-   *        1 if this departureTime is after the other, and 0 if they are equal
+   * 1 if this departureTime is after the other, and 0 if they are equal
    */
   @Override
   public int compareTo(TrainDeparture o) {

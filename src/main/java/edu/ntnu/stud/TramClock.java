@@ -63,10 +63,6 @@ public class TramClock {
     }
   }
 
-  public LocalTime getClock() {
-    return clock;
-  }
-
   /**
    * Adds hours and minutes to the clock. It then updates listeners with the new time.
    *
@@ -74,6 +70,7 @@ public class TramClock {
    * @param minutes a long of how many minutes you want to add
    */
   public void addTime(long hours, long minutes) {
+    // TODO: Gjøre rede for spesialtilfeller
     clock = clock.plusHours(hours);
     clock = clock.plusMinutes(minutes);
     updateListeners();
