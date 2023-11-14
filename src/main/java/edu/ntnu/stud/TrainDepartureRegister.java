@@ -110,6 +110,7 @@ public class TrainDepartureRegister {
   @Override
   public String toString() {
     StringBuilder temp = new StringBuilder("Departures                        Track");
+    temp.append("\n" + "---------------------------------------");
     for (TrainDeparture departure: register.values()){
       temp.append("\n");
       temp.append(departure.toString());
