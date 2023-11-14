@@ -179,6 +179,11 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
     } else {
       temp.append(track);
     }
+
+    while(temp.length() < 45) {
+      temp.append(" ");
+    }
+    temp.append(trainNumber);
     return temp.toString();
   }
 

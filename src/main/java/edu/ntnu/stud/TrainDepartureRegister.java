@@ -54,7 +54,7 @@ public class TrainDepartureRegister implements TramClockListener {
 
   /**
    * Searches after TrainDeparture objects with the given destination
-   * by iterating over all the TrainDeparture objects in the register.
+   * by iterating over all the TrainDeparture objects in the register, ignoring capitalization.
    * If the destination of a TrainDeparture object matches the given
    * destination it is added to a temporary ArrayList.
    *
@@ -65,7 +65,7 @@ public class TrainDepartureRegister implements TramClockListener {
   public ArrayList<TrainDeparture> searchDestination(String destination) {
     ArrayList<TrainDeparture> temp = new ArrayList<>();
     for (TrainDeparture departure : register.values()) {
-      if (departure.getDestination().equals(destination)) {
+      if (departure.getDestination().equalsIgnoreCase(destination)) {
         temp.add(departure);
       }
     }
@@ -108,15 +108,17 @@ public class TrainDepartureRegister implements TramClockListener {
 
   /**
    * Makes a title for departures and their track, then uses toString() on each TrainDeparture
-   * in the register and appends it on a new line.
+   * in a sorted list and appends it on a new line.
    *
    * @return String representing this class
    */
   @Override
   public String toString() {
-    StringBuilder temp = new StringBuilder("Departures                        Track");
-    temp.append("\n" + "---------------------------------------");
-    for (TrainDeparture departure : register.values()) {
+    StringBuilder temp =
+        new StringBuilder(
+            "Departures" + "                        " + "Track" + "      " + "Train Number");
+    temp.append("\n" + "---------------------------------------------------------");
+    for (TrainDeparture departure : sortByTime()) {
       temp.append("\n");
       temp.append(departure.toString());
     }
