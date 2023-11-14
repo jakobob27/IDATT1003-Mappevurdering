@@ -180,7 +180,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
       temp.append(track);
     }
 
-    while(temp.length() < 45) {
+    while (temp.length() < 45) {
       temp.append(" ");
     }
     temp.append(trainNumber);
@@ -192,7 +192,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    *
    * @param o the TrainDeparture object to be compared.
    * @return -1 if this departureTime is before the other,
-   * 1 if this departureTime is after the other, and 0 if they are equal
+   *        1 if this departureTime is after the other, and 0 if they are equal
    */
   @Override
   public int compareTo(TrainDeparture o) {

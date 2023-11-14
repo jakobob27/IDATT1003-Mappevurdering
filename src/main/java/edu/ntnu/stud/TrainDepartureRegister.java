@@ -46,7 +46,7 @@ public class TrainDepartureRegister implements TramClockListener {
    * @param trainNumber A string that describes the train number
    *                    for the TrainDeparture object you want to find
    * @return The TrainDeparture object with the given train number,
-   * if there is no TrainDeparture with the given train number, returns null
+   *        if there is no TrainDeparture with the given train number, returns null
    */
   public TrainDeparture searchTrainNumber(String trainNumber) {
     return register.getOrDefault(trainNumber, null);

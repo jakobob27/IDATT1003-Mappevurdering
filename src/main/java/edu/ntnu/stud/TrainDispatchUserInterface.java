@@ -86,8 +86,8 @@ public class TrainDispatchUserInterface {
             System.out.println("What destination are you searching after?");
             inp = new Scanner(System.in);
             String searchDestination = inp.nextLine();
-            System.out.println("Departures going to " + searchDestination + "          Track" +
-                "      Train Number");
+            System.out.println("Departures going to " + searchDestination + "          Track"
+                + "      Train Number");
             System.out.println("---------------------------------------------------------");
             for (TrainDeparture departure : register.searchDestination(searchDestination)) {
               System.out.println(departure);
@@ -98,8 +98,8 @@ public class TrainDispatchUserInterface {
             System.out.println("What train number are you searching after?");
             inp = new Scanner(System.in);
             String searchTrainNr = inp.nextLine();
-            System.out.println("Departure with train number " + searchTrainNr + "   Track" +
-                "      Train Number");
+            System.out.println("Departure with train number " + searchTrainNr + "   Track"
+                + "      Train Number");
             System.out.println("---------------------------------------------------------");
             System.out.println(register.searchTrainNumber(searchTrainNr));
             System.out.println("\n");
@@ -112,8 +112,8 @@ public class TrainDispatchUserInterface {
             int swapTrack = inp.nextInt();
             register.searchTrainNumber(trackTrainNr).setTrack(swapTrack);
             System.out.println(
-                "Successfully swapped departure with train number " + trackTrainNr + " to track " +
-                    swapTrack + "! \n");
+                "Successfully swapped departure with train number " + trackTrainNr + " to track "
+                    + swapTrack + "! \n");
             break;
           case 6:
             System.out.println("What train number has the departure you want to add delay to?");
@@ -123,8 +123,8 @@ public class TrainDispatchUserInterface {
             long delay = inp.nextLong();
             register.searchTrainNumber(delayTrainNr).setDelay(delay);
             System.out.println(
-                "Successfully set delay of departure with train number " + delayTrainNr + " to " +
-                    delay + " minutes! \n");
+                "Successfully set delay of departure with train number " + delayTrainNr + " to "
+                    + delay + " minutes! \n");
             break;
           case 7:
 
