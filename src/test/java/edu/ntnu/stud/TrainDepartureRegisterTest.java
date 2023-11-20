@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
  * <p>This test class will initialize a TrainDepartureRegister with some
  * TrainDepartures before each test, and use it as the test object where applicable.
  *
- * <p> Firstly, it will check if trying to add a TrainDeparture with the
- * same train number as one in the register will throw an IllegalArgumentException.
+ * <p> Firstly, it will check if the addDeparture method throws an IllegalArgumentException when it
+ * should.
  * It then checks if it correctly adds a TrainDeparture when it should be valid to add it.
  *
  * <p>It then tests the searchTrainNumber method by checking if it gives the expected values
@@ -69,6 +69,22 @@ public class TrainDepartureRegisterTest {
             new TrainDeparture(LocalTime.of(14, 25), "F15", "608", "Skoger")),
         "Validator should throw");
     assertEquals("The train number is already being used!", addDepartureException.getMessage()
+    );
+
+    Exception addDepartureException1 = assertThrows(IllegalArgumentException.class,
+        () -> testObj.addTrainDeparture(
+            new TrainDeparture(LocalTime.of(12, 18), "F15", "627", "Skoger", 4)),
+        "Validator should throw");
+    assertEquals("There can't be two trains on one track at the same departure time!",
+        addDepartureException1.getMessage()
+    );
+
+    Exception addDepartureException2 = assertThrows(IllegalArgumentException.class,
+        () -> testObj.addTrainDeparture(
+            new TrainDeparture(LocalTime.of(12, 18), "F21", "637", "Skoger", 3)),
+        "Validator should throw");
+    assertEquals("There can't be two trains with the same line at the same departure time!",
+        addDepartureException2.getMessage()
     );
   }
 

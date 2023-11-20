@@ -27,15 +27,31 @@ public class TrainDepartureRegister implements TramClockListener {
   }
 
   /**
-   * Adds a TrainDeparture object to the register.
+   * Checks if you are allowed to add a train departure to the register,
+   * then adds itAdds a TrainDeparture object to the register.
    *
    * @param departure A TrainDeparture object
    * @throws IllegalArgumentException If the given TrainDeparture uses the same train number
-   *                                  of another departure that is in the register
+   *                                  of another departure that is in the register.
+   *                                  Also throws if two departures have the same departure time
+   *                                  and has the same track or line.
+   *
    */
   public void addTrainDeparture(TrainDeparture departure) {
     if (register.containsKey(departure.getTrainNumber())) {
       throw new IllegalArgumentException("The train number is already being used!");
+    }
+    for (TrainDeparture i : register.values()) {
+      if (i.getDepartureTime().equals(departure.getDepartureTime())) {
+        if (i.getTrack() == departure.getTrack()) {
+          throw new IllegalArgumentException(
+              "There can't be two trains on one track at the same departure time!");
+        }
+        if (i.getLine().equals(departure.getLine())) {
+          throw new IllegalArgumentException(
+              ("There can't be two trains with the same line at the same departure time!"));
+        }
+      }
     }
     register.put(departure.getTrainNumber(), departure);
   }
