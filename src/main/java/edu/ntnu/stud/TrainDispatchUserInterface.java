@@ -16,9 +16,10 @@ import java.util.Scanner;
  *
  * @author Jakob Huuse
  * @version 1.0.0
- * @since 14.11.2023
+ * @since 21.11.2023
  */
 public class TrainDispatchUserInterface {
+
   private TrainDepartureRegister register;
   private TramClock time;
 
@@ -39,9 +40,9 @@ public class TrainDispatchUserInterface {
   }
 
   /**
-   * Starts the user interface. It will run until the user exits it.
-   * It will ask for input from the user, and if the user inputs something that throws an exception
-   * it will catch it and print its message.
+   * Starts the user interface. It will run until the user exits it. It will ask for input from the
+   * user, and if the user inputs something that throws an exception it will catch it and print its
+   * message.
    */
   public void start() {
     while (true) {
@@ -76,7 +77,8 @@ public class TrainDispatchUserInterface {
                 "What track is it on? (Type an integer equal or lower than 0 if undefined)");
             int track = inp.nextInt();
             if (track <= 0) {
-              register.addTrainDeparture(new TrainDeparture(departureTime, lineNr, trainNr, destination));
+              register.addTrainDeparture(
+                  new TrainDeparture(departureTime, lineNr, trainNr, destination));
             } else {
               register.addTrainDeparture(
                   new TrainDeparture(departureTime, lineNr, trainNr, destination, track));

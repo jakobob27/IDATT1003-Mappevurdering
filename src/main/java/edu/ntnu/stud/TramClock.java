@@ -15,9 +15,10 @@ import java.util.ArrayList;
  *
  * @author Jakob Huuse
  * @version 1.0.0
- * @since 14.11.2023
+ * @since 21.11.2023
  */
 public class TramClock {
+
   private LocalTime clock;
   private LocalTime prevClock;
   private final ArrayList<TramClockListener> listeners;
@@ -36,12 +37,11 @@ public class TramClock {
   }
 
   /**
-   * A constructor for the TramClock class.
-   * It first runs the validator on the given LocalTime object, then sets the clock field to it.
-   * It also initializes the listeners field.
+   * A constructor for the TramClock class. It first runs the validator on the given LocalTime
+   * object, then sets the clock field to it. It also initializes the listeners field.
    *
-   * @param clock A localtime object that describes the current time.
-   *              Doesn't contain units lower than minutes
+   * @param clock A localtime object that describes the current time. Doesn't contain units lower
+   *              than minutes
    */
   public TramClock(LocalTime clock) {
     validator(clock);
@@ -69,12 +69,11 @@ public class TramClock {
   }
 
   /**
-   * Stores the time before adding hours and minutes to the clock.
-   * It then updates listeners with the new time.
+   * Stores the time before adding hours and minutes to the clock. It then updates listeners with
+   * the new time.
    *
    * @param hours   a long of how many hours you want to add
    * @param minutes a long of how many minutes you want to add
-   *
    * @throws IllegalArgumentException when trying to add 24 hours or more
    */
   public void addTime(long hours, long minutes) {

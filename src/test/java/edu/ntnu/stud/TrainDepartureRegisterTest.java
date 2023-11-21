@@ -17,32 +17,31 @@ import org.junit.jupiter.api.Test;
  * TrainDepartures before each test, and use it as the test object where applicable.
  *
  * <p> Firstly, it will check if the addDeparture method throws an IllegalArgumentException when it
- * should.
- * It then checks if it correctly adds a TrainDeparture when it should be valid to add it.
+ * should. It then checks if it correctly adds a TrainDeparture when it should be valid to add it.
  *
  * <p>It then tests the searchTrainNumber method by checking if it gives the expected values
- * for searching for a train number that both is and isn't in the register.
- * It does this by confirming that the returned TrainDeparture is the same as expected, and if it
- * returns null when there is no train number matching in the register
+ * for searching for a train number that both is and isn't in the register. It does this by
+ * confirming that the returned TrainDeparture is the same as expected, and if it returns null when
+ * there is no train number matching in the register
  *
  * <p>It tests the searchDestination method by checking if it returns the expected values for
- * searching by a destination that both is and isn't in the register.
- * It does this by comparing the ArrayList the method returns to
- * an expected manually made ArrayList
+ * searching by a destination that both is and isn't in the register. It does this by comparing the
+ * ArrayList the method returns to an expected manually made ArrayList
  *
  * <p>The removeExpiredDepartures method is tested by checking if the expected TrainDeparture
- * objects get removed from the register. It then checks if it correctly accounts for delay.
- * It does this by comparing the returned ArrayList from searching by
- * destination to an expected manually created ArrayList
+ * objects get removed from the register. It then checks if it correctly accounts for delay. It does
+ * this by comparing the returned ArrayList from searching by destination to an expected manually
+ * created ArrayList
  *
  * <p>Lastly, it checks if the register correctly sort the TrainDeparture objects by departureTime.
  * It does this by comparing a manually sorted ArrayList with the ArrayList the method returns.
  *
  * @author Jakob Huuse
  * @version 1.0.0
- * @since 07.11.2023
+ * @since 21.11.2023
  */
 public class TrainDepartureRegisterTest {
+
   TrainDepartureRegister testObj;
   TrainDeparture testDeparture1;
   TrainDeparture testDeparture2;

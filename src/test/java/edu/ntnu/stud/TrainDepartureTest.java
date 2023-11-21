@@ -21,13 +21,13 @@ import org.junit.jupiter.api.Test;
  * when giving the constructor invalid parameters.
  *
  * <p>It tests the checkTrack method by firstly checking if it throws an IllegalArgumentException
- * if giving it an invalid track parameter in the setTrack() method. It then tests if the track
- * is set correctly when giving it a valid parameter.
+ * if giving it an invalid track parameter in the setTrack() method. It then tests if the track is
+ * set correctly when giving it a valid parameter.
  *
  * <p>It tests the compareTo method by comparing the expected output when
- * comparing the two test objects to the actual output. It also tests when comparing
- * the two test objects the other way around. Finally, it checks if the method returns 0 when
- * comparing to TrainDeparture objects with the same departureTime.
+ * comparing the two test objects to the actual output. It also tests when comparing the two test
+ * objects the other way around. Finally, it checks if the method returns 0 when comparing to
+ * TrainDeparture objects with the same departureTime.
  *
  * <p>Lastly, it checks if the toString() method works by checking if it gives the same String as
  * the expected output.
@@ -98,7 +98,7 @@ public class TrainDepartureTest {
   @Test
   @DisplayName("Check if the toString() method works")
   void testToString() {
-    assertEquals("13:25   F14   Drammen             -1", testObj.toString(),
+    assertEquals("13:25   F14   Drammen             undefined  608", testObj.toString(),
         "The given string should be equal to testObj.toString()");
   }
 }

@@ -22,14 +22,15 @@ import org.junit.jupiter.api.Test;
  * when called.
  *
  * <p>It tests the addTime method by first checking if the added time adds up to the expected time.
- * Then it checks if the addTime method throws IllegalArgumentException
- * when trying to add 24 hours or more.
+ * Then it checks if the addTime method throws IllegalArgumentException when trying to add 24 hours
+ * or more.
  *
  * @author Jakob Huuse
  * @version 1.0.0
- * @since 14.11.2023
+ * @since 21.11.2023
  */
 public class TramClockTest {
+
   private TramClock test;
   private TrainDepartureRegister testRegister;
 
