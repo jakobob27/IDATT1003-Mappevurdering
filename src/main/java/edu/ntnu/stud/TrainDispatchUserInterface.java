@@ -64,7 +64,7 @@ public class TrainDispatchUserInterface {
             inp = new Scanner(System.in);
             String timeInput = inp.nextLine();
             String[] splitTimeInput = timeInput.split(":");
-            LocalTime time = LocalTime.of(Integer.parseInt(splitTimeInput[0]),
+            LocalTime departureTime = LocalTime.of(Integer.parseInt(splitTimeInput[0]),
                 Integer.parseInt(splitTimeInput[1]));
             System.out.println("What is the line number?");
             String lineNr = inp.nextLine();
@@ -76,10 +76,10 @@ public class TrainDispatchUserInterface {
                 "What track is it on? (Type an integer equal or lower than 0 if undefined)");
             int track = inp.nextInt();
             if (track <= 0) {
-              register.addTrainDeparture(new TrainDeparture(time, lineNr, trainNr, destination));
+              register.addTrainDeparture(new TrainDeparture(departureTime, lineNr, trainNr, destination));
             } else {
               register.addTrainDeparture(
-                  new TrainDeparture(time, lineNr, trainNr, destination, track));
+                  new TrainDeparture(departureTime, lineNr, trainNr, destination, track));
             }
             break;
           case 3:
@@ -127,7 +127,13 @@ public class TrainDispatchUserInterface {
                     + delay + " minutes! \n");
             break;
           case 7:
-
+            System.out.println("How many hours do you want to add?");
+            inp = new Scanner(System.in);
+            long addHour = inp.nextLong();
+            System.out.println("How many minutes do you want to add?");
+            long addMinutes = inp.nextLong();
+            time.addTime(addHour, addMinutes);
+            System.out.println(time);
             break;
           case 9:
             return;

@@ -14,6 +14,8 @@ public interface TramClockListener {
    * Update method for listeners of TramClock.
    *
    * @param clock a LocalTime object with the newly set time
+   *
+   * @param prevClock  a LocalTime object with the previously set time
    */
-  public void update(LocalTime clock);
+  public void update(LocalTime prevClock, LocalTime clock);
 }

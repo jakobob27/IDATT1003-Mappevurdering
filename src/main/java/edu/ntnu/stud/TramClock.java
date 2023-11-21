@@ -8,6 +8,8 @@ import java.util.ArrayList;
  *
  * <p>The clock field is a LocalTime object that stores the time.
  *
+ * <p>The prevClock field is a LocalTime object that stores the previous time.
+ *
  * <p>The listeners field is an ArrayList of listeners of a given TramClock object.
  * Each time the time changes, the listeners of the object will be notified.
  *
@@ -17,6 +19,7 @@ import java.util.ArrayList;
  */
 public class TramClock {
   private LocalTime clock;
+  private LocalTime prevClock;
   private final ArrayList<TramClockListener> listeners;
 
   /**
@@ -37,11 +40,13 @@ public class TramClock {
    * It first runs the validator on the given LocalTime object, then sets the clock field to it.
    * It also initializes the listeners field.
    *
-   * @param clock A localtime object that doesn't contain units lower than minutes
+   * @param clock A localtime object that describes the current time.
+   *              Doesn't contain units lower than minutes
    */
   public TramClock(LocalTime clock) {
     validator(clock);
     this.clock = clock;
+    prevClock = clock;
     listeners = new ArrayList<>();
   }
 
@@ -59,18 +64,24 @@ public class TramClock {
    */
   public void updateListeners() {
     for (TramClockListener listener : listeners) {
-      listener.update(clock);
+      listener.update(prevClock, clock);
     }
   }
 
   /**
-   * Adds hours and minutes to the clock. It then updates listeners with the new time.
+   * Stores the time before adding hours and minutes to the clock.
+   * It then updates listeners with the new time.
    *
    * @param hours   a long of how many hours you want to add
    * @param minutes a long of how many minutes you want to add
+   *
+   * @throws IllegalArgumentException when trying to add 24 hours or more
    */
   public void addTime(long hours, long minutes) {
-    // TODO: Gjøre rede for spesialtilfeller
+    if (hours + minutes / 60 >= 24) {
+      throw new IllegalArgumentException("Cannot add more than a day at a time!");
+    }
+    prevClock = clock;
     clock = clock.plusHours(hours);
     clock = clock.plusMinutes(minutes);
     updateListeners();

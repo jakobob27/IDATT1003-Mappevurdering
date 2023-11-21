@@ -35,7 +35,6 @@ public class TrainDepartureRegister implements TramClockListener {
    *                                  of another departure that is in the register.
    *                                  Also throws if two departures have the same departure time
    *                                  and has the same track or line.
-   *
    */
   public void addTrainDeparture(TrainDeparture departure) {
     if (register.containsKey(departure.getTrainNumber())) {
@@ -91,17 +90,29 @@ public class TrainDepartureRegister implements TramClockListener {
   /**
    * Removes expired TrainDeparture objects from the register
    * by iterating over a copy the TrainDeparture objects in the register
-   * and checks if the actual departureTime is before the given time.
+   * and checks if the actual departureTime is in the interval between the
+   * previous time and the new time.
    * If it is, it is removed from the register.
    *
-   * @param time A LocalTime object that determines which TrainDeparture objects
-   *             will be removed if it is after the TrainDeparture objects departureTime with delay.
+   * @param clock A LocalTime object that describes the current time.
+   *
+   * @param prevClock A LocalTime object that describes the previous time.
    */
-  public void removeExpiredDepartures(LocalTime time) {
+  public void removeExpiredDepartures(LocalTime prevClock, LocalTime clock) {
     HashMap<String, TrainDeparture> registerCopy = new HashMap<>(register);
-    for (TrainDeparture departure : registerCopy.values()) {
-      if (departure.getActualDepartureTime().isBefore(time)) {
-        register.remove(departure.getTrainNumber());
+    if (clock.isBefore(prevClock)) {
+      for (TrainDeparture departure : registerCopy.values()) {
+        if (departure.getActualDepartureTime().isBefore(clock)
+            || departure.getActualDepartureTime().isAfter(prevClock)) {
+          register.remove(departure.getTrainNumber());
+        }
+      }
+    } else {
+      for (TrainDeparture departure : registerCopy.values()) {
+        if (departure.getActualDepartureTime().isBefore(clock)
+            && departure.getActualDepartureTime().isAfter(prevClock)) {
+          register.remove(departure.getTrainNumber());
+        }
       }
     }
   }
@@ -118,8 +129,8 @@ public class TrainDepartureRegister implements TramClockListener {
   }
 
   @Override
-  public void update(LocalTime clock) {
-    removeExpiredDepartures(clock);
+  public void update(LocalTime prevClock, LocalTime clock) {
+    removeExpiredDepartures(prevClock, clock);
   }
 
   /**

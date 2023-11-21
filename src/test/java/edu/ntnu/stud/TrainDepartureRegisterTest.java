@@ -110,10 +110,10 @@ public class TrainDepartureRegisterTest {
   void testRemoveExpiredDeparture() {
     ArrayList<TrainDeparture> expectedArrayList = new ArrayList<>();
     expectedArrayList.add(testDeparture2);
-    testObj.removeExpiredDepartures(LocalTime.of(14, 0));
+    testObj.removeExpiredDepartures(LocalTime.of(10, 0), LocalTime.of(14, 0));
     assertEquals(expectedArrayList, testObj.searchDestination("Trondheim"));
 
-    testObj.removeExpiredDepartures(LocalTime.of(16, 0));
+    testObj.removeExpiredDepartures(LocalTime.of(16, 0), LocalTime.of(15, 30));
     assertEquals(new ArrayList<>(), testObj.searchDestination("Trondheim"));
   }
 
@@ -124,7 +124,7 @@ public class TrainDepartureRegisterTest {
     expectedArrayList.add(testDeparture2);
     expectedArrayList.add(testDeparture3);
     testDeparture3.setDelay(120);
-    testObj.removeExpiredDepartures(LocalTime.of(14, 0));
+    testObj.removeExpiredDepartures(LocalTime.of(10, 0), LocalTime.of(14, 0));
     assertEquals(expectedArrayList, testObj.searchDestination("Trondheim"));
   }
 
