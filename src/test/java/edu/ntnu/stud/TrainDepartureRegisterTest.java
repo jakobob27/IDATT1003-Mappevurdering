@@ -40,7 +40,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Jakob Huuse
  * @version 1.0.0
- * @since 07.11.2023
+ * @since 30.11.2023
  */
 public class TrainDepartureRegisterTest {
   TrainDepartureRegister testObj;
@@ -92,15 +92,19 @@ public class TrainDepartureRegisterTest {
   @DisplayName("Check if searching by train number works")
   void testSearchTrainNumber() {
     assertEquals(testDeparture1, testObj.searchTrainNumber("608"));
-    assertNull(testObj.searchTrainNumber("607"));
+    Exception searchDepartureException = assertThrows(IllegalArgumentException.class,
+        () -> testObj.searchTrainNumber("607"));
+    assertEquals("That train number is not in the register!",
+        searchDepartureException.getMessage()
+    );
   }
 
   @Test
   @DisplayName("Check if searching by destination works")
   void testSearchDestination() {
     ArrayList<TrainDeparture> expectedArrayList = new ArrayList<>();
-    expectedArrayList.add(testDeparture2);
     expectedArrayList.add(testDeparture3);
+    expectedArrayList.add(testDeparture2);
     assertEquals(expectedArrayList, testObj.searchDestination("Trondheim"));
     assertEquals(new ArrayList<>(), testObj.searchDestination("No man's land"));
   }
@@ -110,10 +114,10 @@ public class TrainDepartureRegisterTest {
   void testRemoveExpiredDeparture() {
     ArrayList<TrainDeparture> expectedArrayList = new ArrayList<>();
     expectedArrayList.add(testDeparture2);
-    testObj.removeExpiredDepartures(LocalTime.of(10, 0), LocalTime.of(14, 0));
+    testObj.removeExpiredDepartures(LocalTime.of(14, 0));
     assertEquals(expectedArrayList, testObj.searchDestination("Trondheim"));
 
-    testObj.removeExpiredDepartures(LocalTime.of(16, 0), LocalTime.of(15, 30));
+    testObj.removeExpiredDepartures(LocalTime.of(15, 30));
     assertEquals(new ArrayList<>(), testObj.searchDestination("Trondheim"));
   }
 
@@ -121,10 +125,10 @@ public class TrainDepartureRegisterTest {
   @DisplayName("Check if removing expired departures accounts for delay")
   void testRemoveExpiredDepartureDelay() {
     ArrayList<TrainDeparture> expectedArrayList = new ArrayList<>();
-    expectedArrayList.add(testDeparture2);
     expectedArrayList.add(testDeparture3);
-    testDeparture3.setDelay(120);
-    testObj.removeExpiredDepartures(LocalTime.of(10, 0), LocalTime.of(14, 0));
+    expectedArrayList.add(testDeparture2);
+    testDeparture3.setDelay(LocalTime.of(2,0));
+    testObj.removeExpiredDepartures(LocalTime.of(14, 0));
     assertEquals(expectedArrayList, testObj.searchDestination("Trondheim"));
   }
 

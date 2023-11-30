@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Jakob Huuse
  * @version 1.0.1
- * @since 14.11.2023
+ * @since 30.11.2023
  */
 public class TrainDepartureTest {
 
@@ -98,7 +98,7 @@ public class TrainDepartureTest {
   @Test
   @DisplayName("Check if the toString() method works")
   void testToString() {
-    assertEquals("13:25   F14   Drammen             -1", testObj.toString(),
+    assertEquals("13:25   F14   608   Drammen                   ", testObj.toString(),
         "The given string should be equal to testObj.toString()");
   }
 }

@@ -28,11 +28,12 @@ import java.time.LocalTime;
  * <p>track - An integer that describes which track the train-departure is running on.
  * If the track is not defined the value is set to -1.
  *
- * <p>delay - A long that describes the delay of the train in minutes
+ * <p>delay - A localtime object that describes the delay of the train in hours and minutes.
+ * If no delay is set, the delay is 00:00
  *
  * @author Jakob Huuse
  * @version 1.0.1
- * @since 14.11.2023
+ * @since 30.11.2023
  */
 public class TrainDeparture implements Comparable<TrainDeparture> {
 
@@ -41,7 +42,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
   private final String trainNumber;
   private final String destination;
   private int track = -1;
-  private long delay;
+  private LocalTime delay = LocalTime.MIDNIGHT;
 
 
   /**
@@ -132,7 +133,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
     return track;
   }
 
-  public long getDelay() {
+  public LocalTime getDelay() {
     return delay;
   }
 
@@ -142,7 +143,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    * @return a LocalTime object describing departureTime with delay
    */
   public LocalTime getActualDepartureTime() {
-    return departureTime.plusMinutes(delay);
+    return departureTime.plusHours(delay.getHour()).plusMinutes(delay.getMinute());
   }
 
   /**
@@ -155,7 +156,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
     this.track = track;
   }
 
-  public void setDelay(long delay) {
+  public void setDelay(LocalTime delay) {
     this.delay = delay;
   }
 
@@ -166,24 +167,29 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    */
   @Override
   public String toString() {
-    StringBuilder temp = new StringBuilder(getActualDepartureTime() + "   " + line);
+    StringBuilder temp = new StringBuilder(departureTime + "   " + line);
     while (temp.length() < 14) {
       temp.append(" ");
     }
-    temp.append(destination);
-    while (temp.length() < 34) {
+    temp.append(trainNumber);
+    while (temp.length() < 20) {
       temp.append(" ");
     }
-    if (track == -1) {
-      temp.append("undefined");
-    } else {
-      temp.append(track);
+    temp.append(destination);
+    while (temp.length() < 36) {
+      temp.append(" ");
     }
 
-    while (temp.length() < 45) {
+    if (!delay.equals(LocalTime.MIDNIGHT)) {
+      temp.append(delay);
+    }
+    while (temp.length() < 46) {
       temp.append(" ");
     }
-    temp.append(trainNumber);
+
+    if (track != -1) {
+      temp.append(track);
+    }
     return temp.toString();
   }
 

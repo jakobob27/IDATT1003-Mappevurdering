@@ -12,11 +12,9 @@ import java.util.Scanner;
  * <p>The time field is of the type TramClock,
  * and will manage the time of the application.
  *
- * <p>The field inp is of the type Scanner, and will take the users input.
- *
  * @author Jakob Huuse
  * @version 1.0.0
- * @since 14.11.2023
+ * @since 30.11.2023
  */
 public class TrainDispatchUserInterface {
   private TrainDepartureRegister register;
@@ -35,7 +33,7 @@ public class TrainDispatchUserInterface {
     register.addTrainDeparture(new TrainDeparture(LocalTime.of(10, 25), "A125", "68", "Oslo", 2));
     time = new TramClock(LocalTime.of(0, 0));
     time.addListener(register);
-    inp = new Scanner(System.in);
+    register.searchTrainNumber("628").setDelay(LocalTime.of(0, 29));
   }
 
   /**
@@ -54,6 +52,7 @@ public class TrainDispatchUserInterface {
       System.out.println("6. Add delay to departure");
       System.out.println("7. Update clock");
       System.out.println("9. Exit");
+      inp = new Scanner(System.in);
       try {
         switch (inp.nextInt()) {
           case 1:
@@ -61,11 +60,7 @@ public class TrainDispatchUserInterface {
             break;
           case 2:
             System.out.println("When is the departure time? (Give time in the format hh:mm)");
-            inp = new Scanner(System.in);
-            String timeInput = inp.nextLine();
-            String[] splitTimeInput = timeInput.split(":");
-            LocalTime departureTime = LocalTime.of(Integer.parseInt(splitTimeInput[0]),
-                Integer.parseInt(splitTimeInput[1]));
+            LocalTime departureTime = askTime();
             System.out.println("What is the line number?");
             String lineNr = inp.nextLine();
             System.out.println("What is the train number?");
@@ -76,7 +71,8 @@ public class TrainDispatchUserInterface {
                 "What track is it on? (Type an integer equal or lower than 0 if undefined)");
             int track = inp.nextInt();
             if (track <= 0) {
-              register.addTrainDeparture(new TrainDeparture(departureTime, lineNr, trainNr, destination));
+              register.addTrainDeparture(
+                  new TrainDeparture(departureTime, lineNr, trainNr, destination));
             } else {
               register.addTrainDeparture(
                   new TrainDeparture(departureTime, lineNr, trainNr, destination, track));
@@ -86,8 +82,13 @@ public class TrainDispatchUserInterface {
             System.out.println("What destination are you searching after?");
             inp = new Scanner(System.in);
             String searchDestination = inp.nextLine();
-            System.out.println("Departures going to " + searchDestination + "          Track"
-                + "      Train Number");
+            StringBuilder searchString =
+                new StringBuilder("Departures going to " + searchDestination);
+            while (searchString.length() < 36) {
+              searchString.append(" ");
+            }
+            searchString.append("Delay     Track");
+            System.out.println(searchString);
             System.out.println("---------------------------------------------------------");
             for (TrainDeparture departure : register.searchDestination(searchDestination)) {
               System.out.println(departure);
@@ -98,8 +99,14 @@ public class TrainDispatchUserInterface {
             System.out.println("What train number are you searching after?");
             inp = new Scanner(System.in);
             String searchTrainNr = inp.nextLine();
-            System.out.println("Departure with train number " + searchTrainNr + "   Track"
-                + "      Train Number");
+            register.searchTrainNumber(searchTrainNr);
+            StringBuilder searchNumberString =
+                new StringBuilder("Departures with train number " + searchTrainNr);
+            while (searchNumberString.length() < 36) {
+              searchNumberString.append(" ");
+            }
+            searchNumberString.append("Delay     Track");
+            System.out.println(searchNumberString);
             System.out.println("---------------------------------------------------------");
             System.out.println(register.searchTrainNumber(searchTrainNr));
             System.out.println("\n");
@@ -119,20 +126,14 @@ public class TrainDispatchUserInterface {
             System.out.println("What train number has the departure you want to add delay to?");
             inp = new Scanner(System.in);
             String delayTrainNr = inp.nextLine();
-            System.out.println("How many minutes is it delayed?");
-            long delay = inp.nextLong();
+            LocalTime delay = askTime();
             register.searchTrainNumber(delayTrainNr).setDelay(delay);
             System.out.println(
                 "Successfully set delay of departure with train number " + delayTrainNr + " to "
-                    + delay + " minutes! \n");
+                    + register.searchTrainNumber(delayTrainNr).getDelay() + "! \n");
             break;
           case 7:
-            System.out.println("How many hours do you want to add?");
-            inp = new Scanner(System.in);
-            long addHour = inp.nextLong();
-            System.out.println("How many minutes do you want to add?");
-            long addMinutes = inp.nextLong();
-            time.addTime(addHour, addMinutes);
+            time.setTime(askTime());
             System.out.println(time);
             break;
           case 9:
@@ -141,10 +142,26 @@ public class TrainDispatchUserInterface {
             System.out.println("Please give an integer on the list");
             break;
         }
+      } catch (IllegalArgumentException e) {
+        System.out.println(e.getMessage());
       } catch (Exception e) {
-        System.out.println("Input not valid: " + e.getMessage());
+        System.out.println("Input not valid!");
       }
     }
+  }
+
+  /**
+   * Asks the user to input time and turns it into a LocalTime object of that time.
+   *        @return A LocalTime object defined by user input.
+   */
+  private LocalTime askTime() {
+    System.out.println("What time do you want to set? (Give time in the format hh:mm)");
+    inp = new Scanner(System.in);
+    String clockInput = inp.nextLine();
+    String[] splitClockInput = clockInput.split(":");
+
+    return LocalTime.of(Integer.parseInt(splitClockInput[0]),
+        Integer.parseInt(splitClockInput[1]));
   }
 
   @Override

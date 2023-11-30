@@ -14,12 +14,11 @@ import java.util.ArrayList;
  * Each time the time changes, the listeners of the object will be notified.
  *
  * @author Jakob Huuse
- * @version 1.0.0
- * @since 14.11.2023
+ * @version 1.0.1
+ * @since 30.11.2023
  */
 public class TramClock {
   private LocalTime clock;
-  private LocalTime prevClock;
   private final ArrayList<TramClockListener> listeners;
 
   /**
@@ -46,7 +45,6 @@ public class TramClock {
   public TramClock(LocalTime clock) {
     validator(clock);
     this.clock = clock;
-    prevClock = clock;
     listeners = new ArrayList<>();
   }
 
@@ -64,26 +62,23 @@ public class TramClock {
    */
   public void updateListeners() {
     for (TramClockListener listener : listeners) {
-      listener.update(prevClock, clock);
+      listener.update(clock);
     }
   }
 
   /**
-   * Stores the time before adding hours and minutes to the clock.
+   * Sets a new time for the clock.
    * It then updates listeners with the new time.
    *
-   * @param hours   a long of how many hours you want to add
-   * @param minutes a long of how many minutes you want to add
-   *
-   * @throws IllegalArgumentException when trying to add 24 hours or more
+   * @param newTime A LocalTime object describing the new time you want to set the clock to.
+   * @throws IllegalArgumentException when trying to set the clock
+   *                                  to an earlier time than it is currently.
    */
-  public void addTime(long hours, long minutes) {
-    if (hours + minutes / 60 >= 24) {
-      throw new IllegalArgumentException("Cannot add more than a day at a time!");
+  public void setTime(LocalTime newTime) {
+    if (newTime.isBefore(clock)) {
+      throw new IllegalArgumentException("Cannot set the clock to an earlier time!");
     }
-    prevClock = clock;
-    clock = clock.plusHours(hours);
-    clock = clock.plusMinutes(minutes);
+    clock = newTime;
     updateListeners();
   }
 

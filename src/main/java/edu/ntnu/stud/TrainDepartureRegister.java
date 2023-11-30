@@ -14,7 +14,7 @@ import java.util.HashMap;
  *
  * @author Jakob Huuse
  * @version 1.0.0
- * @since 14.11.2023
+ * @since 30.11.2023
  */
 public class TrainDepartureRegister implements TramClockListener {
   private final HashMap<String, TrainDeparture> register;
@@ -60,22 +60,26 @@ public class TrainDepartureRegister implements TramClockListener {
    *
    * @param trainNumber A string that describes the train number
    *                    for the TrainDeparture object you want to find
-   * @return The TrainDeparture object with the given train number,
-   *        if there is no TrainDeparture with the given train number, returns null
+   * @return The TrainDeparture object with the given train number.
+   * @throws IllegalArgumentException if the train number is not in the register.
    */
   public TrainDeparture searchTrainNumber(String trainNumber) {
-    return register.getOrDefault(trainNumber, null);
+    if (!register.containsKey(trainNumber)) {
+      throw new IllegalArgumentException("That train number is not in the register!");
+    }
+    return register.get(trainNumber);
   }
 
   /**
    * Searches after TrainDeparture objects with the given destination
    * by iterating over all the TrainDeparture objects in the register, ignoring capitalization.
    * If the destination of a TrainDeparture object matches the given
-   * destination it is added to a temporary ArrayList.
+   * destination it is added to a temporary ArrayList. It is then sorted.
    *
    * @param destination A string that describes
    *                    the destination of the TrainDeparture objects you want to find
-   * @return A temporary ArrayList containing the TrainDeparture objects with the given destination
+   * @return A sorted temporary ArrayList
+   *        containing the TrainDeparture objects with the given destination
    */
   public ArrayList<TrainDeparture> searchDestination(String destination) {
     ArrayList<TrainDeparture> temp = new ArrayList<>();
@@ -84,35 +88,23 @@ public class TrainDepartureRegister implements TramClockListener {
         temp.add(departure);
       }
     }
+    Collections.sort(temp);
     return temp;
   }
 
   /**
    * Removes expired TrainDeparture objects from the register
    * by iterating over a copy the TrainDeparture objects in the register
-   * and checks if the actual departureTime is in the interval between the
-   * previous time and the new time.
+   * and checks if the actual departureTime is before the current time.
    * If it is, it is removed from the register.
    *
    * @param clock A LocalTime object that describes the current time.
-   *
-   * @param prevClock A LocalTime object that describes the previous time.
    */
-  public void removeExpiredDepartures(LocalTime prevClock, LocalTime clock) {
+  public void removeExpiredDepartures(LocalTime clock) {
     HashMap<String, TrainDeparture> registerCopy = new HashMap<>(register);
-    if (clock.isBefore(prevClock)) {
-      for (TrainDeparture departure : registerCopy.values()) {
-        if (departure.getActualDepartureTime().isBefore(clock)
-            || departure.getActualDepartureTime().isAfter(prevClock)) {
-          register.remove(departure.getTrainNumber());
-        }
-      }
-    } else {
-      for (TrainDeparture departure : registerCopy.values()) {
-        if (departure.getActualDepartureTime().isBefore(clock)
-            && departure.getActualDepartureTime().isAfter(prevClock)) {
-          register.remove(departure.getTrainNumber());
-        }
+    for (TrainDeparture departure : registerCopy.values()) {
+      if (departure.getActualDepartureTime().isBefore(clock)) {
+        register.remove(departure.getTrainNumber());
       }
     }
   }
@@ -129,8 +121,8 @@ public class TrainDepartureRegister implements TramClockListener {
   }
 
   @Override
-  public void update(LocalTime prevClock, LocalTime clock) {
-    removeExpiredDepartures(prevClock, clock);
+  public void update(LocalTime clock) {
+    removeExpiredDepartures(clock);
   }
 
   /**
@@ -143,8 +135,8 @@ public class TrainDepartureRegister implements TramClockListener {
   public String toString() {
     StringBuilder temp =
         new StringBuilder(
-            "Departures" + "                        " + "Track" + "      " + "Train Number");
-    temp.append("\n" + "---------------------------------------------------------");
+            "Departures" + "                          " + "Delay" + "     " + "Track");
+    temp.append("\n" + "----------------------------------------------------");
     for (TrainDeparture departure : sortByTime()) {
       temp.append("\n");
       temp.append(departure.toString());

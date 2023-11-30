@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Jakob Huuse
  * @version 1.0.0
- * @since 14.11.2023
+ * @since 30.11.2023
  */
 public class TramClockTest {
   private TramClock test;
@@ -54,20 +54,20 @@ public class TramClockTest {
     testRegister = new TrainDepartureRegister();
     test.addListener(testRegister);
     testRegister.addTrainDeparture(new TrainDeparture(LocalTime.of(7, 0), "L2", "27", "Trondheim"));
-    test.addTime(2, 0);
+    test.setTime(LocalTime.of(10, 0));
     assertEquals(new ArrayList<>(), testRegister.searchDestination("Trondheim"));
   }
 
   @Test
   @DisplayName("Test addTime method")
   void testAddTime() {
-    test.addTime(2, 6);
+    test.setTime(LocalTime.of(8, 6));
     assertEquals("The time is 08:06", test.toString());
 
     Exception addTimeException = assertThrows(IllegalArgumentException.class,
-        () -> test.addTime(23, 61),
+        () -> test.setTime(LocalTime.of(7,0)),
         "method should trow");
     assertEquals(addTimeException.getMessage(),
-        "Cannot add more than a day at a time!");
+        "Cannot set the clock to an earlier time!");
   }
 }
