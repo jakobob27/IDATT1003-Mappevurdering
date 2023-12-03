@@ -79,7 +79,7 @@ public class TrainDepartureRegister implements TramClockListener {
    * @param destination A string that describes
    *                    the destination of the TrainDeparture objects you want to find
    * @return A sorted temporary ArrayList
-   *        containing the TrainDeparture objects with the given destination
+   * containing the TrainDeparture objects with the given destination
    */
   public ArrayList<TrainDeparture> searchDestination(String destination) {
     ArrayList<TrainDeparture> temp = new ArrayList<>();
@@ -135,7 +135,8 @@ public class TrainDepartureRegister implements TramClockListener {
   public String toString() {
     StringBuilder temp =
         new StringBuilder(
-            "Departures" + "                          " + "Delay" + "     " + "Track");
+            "Time" + "    " + "Line" + "  " + "Nr." + "   " +"Destination" + "     " + "Delay" + "     "
+                + "Track");
     temp.append("\n" + "----------------------------------------------------");
     for (TrainDeparture departure : sortByTime()) {
       temp.append("\n");

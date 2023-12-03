@@ -148,7 +148,10 @@ public class TrainDispatchUserInterface {
 
   /**
    * Asks the user to input time and turns it into a LocalTime object of that time.
-   *        @return A LocalTime object defined by user input.
+   *
+   * @param message A string with the message you want to be displayed.
+   *
+   * @return A LocalTime object defined by user input.
    */
   private LocalTime askTime(String message) {
     System.out.println(message + " (Give time in the format hh:mm)");
