@@ -1,6 +1,8 @@
 package edu.ntnu.stud;
 
+import java.lang.reflect.Array;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -79,16 +81,22 @@ public class TrainDispatchUserInterface {
             System.out.println("What destination are you searching after?");
             inp = new Scanner(System.in);
             String searchDestination = inp.nextLine();
-            StringBuilder searchString =
-                new StringBuilder("Departures going to " + searchDestination);
-            while (searchString.length() < 36) {
-              searchString.append(" ");
-            }
-            searchString.append("Delay     Track");
-            System.out.println(searchString);
-            System.out.println("---------------------------------------------------------");
-            for (TrainDeparture departure : register.searchDestination(searchDestination)) {
-              System.out.println(departure);
+            ArrayList<TrainDeparture> foundDestinations =
+                register.searchDestination(searchDestination);
+            if (foundDestinations.isEmpty()) {
+              System.out.println("No departures going to that destination!");
+            } else {
+              StringBuilder searchString =
+                  new StringBuilder("Departures going to " + searchDestination);
+              while (searchString.length() < 36) {
+                searchString.append(" ");
+              }
+              searchString.append("Delay     Track     ETA");
+              System.out.println(searchString);
+              System.out.println("-------------------------------------------------------------");
+              for (TrainDeparture departure : foundDestinations) {
+                System.out.println(departure);
+              }
             }
             System.out.println("\n");
           }
@@ -98,13 +106,13 @@ public class TrainDispatchUserInterface {
             String searchTrainNr = inp.nextLine();
             register.searchTrainNumber(searchTrainNr);
             StringBuilder searchNumberString =
-                new StringBuilder("Departures with train number " + searchTrainNr);
+                new StringBuilder("Departure with train number " + searchTrainNr);
             while (searchNumberString.length() < 36) {
               searchNumberString.append(" ");
             }
-            searchNumberString.append("Delay     Track");
+            searchNumberString.append("Delay     Track     ETA");
             System.out.println(searchNumberString);
-            System.out.println("---------------------------------------------------------");
+            System.out.println("-------------------------------------------------------------");
             System.out.println(register.searchTrainNumber(searchTrainNr));
             System.out.println("\n");
           }
@@ -139,9 +147,9 @@ public class TrainDispatchUserInterface {
           default -> System.out.println("Please give an integer on the list");
         }
       } catch (IllegalArgumentException e) {
-        System.out.println(e.getMessage());
+        System.out.println(e.getMessage() + "\n");
       } catch (Exception e) {
-        System.out.println("Input not valid!");
+        System.out.println("Input not valid!" + "\n");
       }
     }
   }
@@ -150,7 +158,6 @@ public class TrainDispatchUserInterface {
    * Asks the user to input time and turns it into a LocalTime object of that time.
    *
    * @param message A string with the message you want to be displayed.
-   *
    * @return A LocalTime object defined by user input.
    */
   private LocalTime askTime(String message) {

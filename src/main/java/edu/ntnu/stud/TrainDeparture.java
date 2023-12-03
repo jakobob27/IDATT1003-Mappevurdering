@@ -33,7 +33,7 @@ import java.time.LocalTime;
  *
  * @author Jakob Huuse
  * @version 1.0.1
- * @since 30.11.2023
+ * @since 03.12.2023
  */
 public class TrainDeparture implements Comparable<TrainDeparture> {
 
@@ -186,10 +186,13 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
     while (temp.length() < 46) {
       temp.append(" ");
     }
-
     if (track != -1) {
       temp.append(track);
     }
+    while (temp.length() < 56) {
+      temp.append(" ");
+    }
+    temp.append(getActualDepartureTime());
     return temp.toString();
   }
 
