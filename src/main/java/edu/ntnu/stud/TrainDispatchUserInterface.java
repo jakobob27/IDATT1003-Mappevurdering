@@ -14,7 +14,7 @@ import java.util.Scanner;
  *
  * @author Jakob Huuse
  * @version 1.0.0
- * @since 30.11.2023
+ * @since 03.12.2023
  */
 public class TrainDispatchUserInterface {
   private TrainDepartureRegister register;
@@ -55,12 +55,9 @@ public class TrainDispatchUserInterface {
       inp = new Scanner(System.in);
       try {
         switch (inp.nextInt()) {
-          case 1:
-            System.out.println(this);
-            break;
-          case 2:
-            System.out.println("When is the departure time? (Give time in the format hh:mm)");
-            LocalTime departureTime = askTime();
+          case 1 -> System.out.println(this);
+          case 2 -> {
+            LocalTime departureTime = askTime("When is the departure time?");
             System.out.println("What is the line number?");
             String lineNr = inp.nextLine();
             System.out.println("What is the train number?");
@@ -77,8 +74,8 @@ public class TrainDispatchUserInterface {
               register.addTrainDeparture(
                   new TrainDeparture(departureTime, lineNr, trainNr, destination, track));
             }
-            break;
-          case 3:
+          }
+          case 3 -> {
             System.out.println("What destination are you searching after?");
             inp = new Scanner(System.in);
             String searchDestination = inp.nextLine();
@@ -94,8 +91,8 @@ public class TrainDispatchUserInterface {
               System.out.println(departure);
             }
             System.out.println("\n");
-            break;
-          case 4:
+          }
+          case 4 -> {
             System.out.println("What train number are you searching after?");
             inp = new Scanner(System.in);
             String searchTrainNr = inp.nextLine();
@@ -110,8 +107,8 @@ public class TrainDispatchUserInterface {
             System.out.println("---------------------------------------------------------");
             System.out.println(register.searchTrainNumber(searchTrainNr));
             System.out.println("\n");
-            break;
-          case 5:
+          }
+          case 5 -> {
             System.out.println("What train number has the departure you want to switch tracks on?");
             inp = new Scanner(System.in);
             String trackTrainNr = inp.nextLine();
@@ -121,26 +118,25 @@ public class TrainDispatchUserInterface {
             System.out.println(
                 "Successfully swapped departure with train number " + trackTrainNr + " to track "
                     + swapTrack + "! \n");
-            break;
-          case 6:
+          }
+          case 6 -> {
             System.out.println("What train number has the departure you want to add delay to?");
             inp = new Scanner(System.in);
             String delayTrainNr = inp.nextLine();
-            LocalTime delay = askTime();
+            LocalTime delay = askTime("What is the delay?");
             register.searchTrainNumber(delayTrainNr).setDelay(delay);
             System.out.println(
                 "Successfully set delay of departure with train number " + delayTrainNr + " to "
                     + register.searchTrainNumber(delayTrainNr).getDelay() + "! \n");
-            break;
-          case 7:
-            time.setTime(askTime());
+          }
+          case 7 -> {
+            time.setTime(askTime("What do you want to set the time to?"));
             System.out.println(time);
-            break;
-          case 9:
+          }
+          case 9 -> {
             return;
-          default:
-            System.out.println("Please give an integer on the list");
-            break;
+          }
+          default -> System.out.println("Please give an integer on the list");
         }
       } catch (IllegalArgumentException e) {
         System.out.println(e.getMessage());
@@ -154,8 +150,8 @@ public class TrainDispatchUserInterface {
    * Asks the user to input time and turns it into a LocalTime object of that time.
    *        @return A LocalTime object defined by user input.
    */
-  private LocalTime askTime() {
-    System.out.println("What time do you want to set? (Give time in the format hh:mm)");
+  private LocalTime askTime(String message) {
+    System.out.println(message + " (Give time in the format hh:mm)");
     inp = new Scanner(System.in);
     String clockInput = inp.nextLine();
     String[] splitClockInput = clockInput.split(":");
