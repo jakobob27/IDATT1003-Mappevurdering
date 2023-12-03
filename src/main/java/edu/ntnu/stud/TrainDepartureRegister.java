@@ -14,7 +14,7 @@ import java.util.HashMap;
  *
  * @author Jakob Huuse
  * @version 1.0.0
- * @since 30.11.2023
+ * @since 03.12.2023
  */
 public class TrainDepartureRegister implements TramClockListener {
   private final HashMap<String, TrainDeparture> register;
