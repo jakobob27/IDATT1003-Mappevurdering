@@ -144,7 +144,7 @@ public class TrainDispatchUserInterface {
           case 9 -> {
             return;
           }
-          default -> System.out.println("Please give an integer on the list");
+          default -> System.out.println("Please give an integer on the list!\n");
         }
       } catch (IllegalArgumentException e) {
         System.out.println(e.getMessage() + "\n");
