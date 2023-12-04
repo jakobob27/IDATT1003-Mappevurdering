@@ -43,8 +43,8 @@ import org.junit.jupiter.api.Test;
  * <p>Lastly, it checks if the toString() method gives the expected output.
  *
  * @author Jakob Huuse
- * @version 1.0.0
- * @since 30.11.2023
+ * @version 1.0.1
+ * @since 04.11.2023
  */
 public class TrainDepartureRegisterTest {
   TrainDepartureRegister testObj;
@@ -158,12 +158,12 @@ public class TrainDepartureRegisterTest {
   @Test
   @DisplayName("Check if the toString method works")
   void testToString() {
-    testObj.update(LocalTime.of(14, 0));
     String expectedString = """
         Time    Line  Nr.   Destination     Delay     Track     ETA
         --------------------------------------------------------------
-        15:15   F22   1337  Trondheim                 2         15:15
-        """;
+        12:18   F21   H684  Trondheim                 4         12:18
+        13:25   F14   608   Drammen                             13:25
+        15:15   F22   1337  Trondheim                 2         15:15""";
     assertEquals(expectedString, testObj.toString());
   }
 }

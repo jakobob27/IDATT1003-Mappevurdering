@@ -16,7 +16,7 @@ import java.util.Scanner;
  *
  * @author Jakob Huuse
  * @version 1.0.0
- * @since 03.12.2023
+ * @since 04.12.2023
  */
 public class TrainDispatchUserInterface {
   private TrainDepartureRegister register;
@@ -45,7 +45,7 @@ public class TrainDispatchUserInterface {
    */
   public void start() {
     while (true) {
-      System.out.println("What do you want to do?");
+      System.out.println("\nWhat do you want to do?");
       System.out.println("1. Print departures");
       System.out.println("2. Create new train departure");
       System.out.println("3. Search departure by destination");
@@ -114,7 +114,6 @@ public class TrainDispatchUserInterface {
             System.out.println(searchNumberString);
             System.out.println("-------------------------------------------------------------");
             System.out.println(register.searchTrainNumber(searchTrainNr));
-            System.out.println("\n");
           }
           case 5 -> {
             System.out.println("What train number has the departure you want to switch tracks on?");
@@ -125,7 +124,7 @@ public class TrainDispatchUserInterface {
             register.searchTrainNumber(trackTrainNr).setTrack(swapTrack);
             System.out.println(
                 "Successfully swapped departure with train number " + trackTrainNr + " to track "
-                    + swapTrack + "! \n");
+                    + swapTrack + "!");
           }
           case 6 -> {
             System.out.println("What train number has the departure you want to add delay to?");
@@ -135,7 +134,7 @@ public class TrainDispatchUserInterface {
             register.searchTrainNumber(delayTrainNr).setDelay(delay);
             System.out.println(
                 "Successfully set delay of departure with train number " + delayTrainNr + " to "
-                    + register.searchTrainNumber(delayTrainNr).getDelay() + "! \n");
+                    + register.searchTrainNumber(delayTrainNr).getDelay() + "!");
           }
           case 7 -> {
             time.setTime(askTime("What do you want to set the time to?"));
@@ -144,12 +143,12 @@ public class TrainDispatchUserInterface {
           case 9 -> {
             return;
           }
-          default -> System.out.println("Please give an integer on the list!\n");
+          default -> System.out.println("Please give an integer on the list!");
         }
       } catch (IllegalArgumentException e) {
-        System.out.println(e.getMessage() + "\n");
+        System.out.println(e.getMessage());
       } catch (Exception e) {
-        System.out.println("Input not valid!" + "\n");
+        System.out.println("Input not valid!");
       }
     }
   }
