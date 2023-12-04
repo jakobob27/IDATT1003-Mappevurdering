@@ -126,7 +126,7 @@ public class TrainDepartureRegister implements TramClockListener {
   }
 
   /**
-   * Makes a title for departures and their track, then uses toString() on each TrainDeparture
+   * Makes headings for the departures, then uses toString() on each TrainDeparture
    * in a sorted list and appends it on a new line.
    *
    * @return String representing this class

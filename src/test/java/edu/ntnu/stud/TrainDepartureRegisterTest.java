@@ -35,8 +35,12 @@ import org.junit.jupiter.api.Test;
  * It does this by comparing the returned ArrayList from searching by
  * destination to an expected manually created ArrayList
  *
- * <p>Lastly, it checks if the register correctly sort the TrainDeparture objects by departureTime.
+ * <p>It checks if the register correctly sort the TrainDeparture objects by departureTime.
  * It does this by comparing a manually sorted ArrayList with the ArrayList the method returns.
+ *
+ * <p>It checks if the update method correctly removes the expired departures when called.
+ *
+ * <p>Lastly, it checks if the toString() method gives the expected output.
  *
  * @author Jakob Huuse
  * @version 1.0.0
@@ -127,7 +131,7 @@ public class TrainDepartureRegisterTest {
     ArrayList<TrainDeparture> expectedArrayList = new ArrayList<>();
     expectedArrayList.add(testDeparture3);
     expectedArrayList.add(testDeparture2);
-    testDeparture3.setDelay(LocalTime.of(2,0));
+    testDeparture3.setDelay(LocalTime.of(2, 0));
     testObj.removeExpiredDepartures(LocalTime.of(14, 0));
     assertEquals(expectedArrayList, testObj.searchDestination("Trondheim"));
   }
@@ -142,4 +146,24 @@ public class TrainDepartureRegisterTest {
     assertEquals(expectedArrayList, testObj.sortByTime());
   }
 
+  @Test
+  @DisplayName("Check if the update method works")
+  void testUpdate() {
+    testObj.update(LocalTime.of(14, 0));
+    ArrayList<TrainDeparture> expectedArrayList = new ArrayList<>();
+    expectedArrayList.add(testDeparture2);
+    assertEquals(expectedArrayList, testObj.sortByTime());
+  }
+
+  @Test
+  @DisplayName("Check if the toString method works")
+  void testToString() {
+    testObj.update(LocalTime.of(14, 0));
+    String expectedString = """
+        Time    Line  Nr.   Destination     Delay     Track     ETA
+        --------------------------------------------------------------
+        15:15   F22   1337  Trondheim                 2         15:15
+        """;
+    assertEquals(expectedString, testObj.toString());
+  }
 }
