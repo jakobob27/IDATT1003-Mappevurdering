@@ -34,12 +34,12 @@ import org.junit.jupiter.api.Test;
  *
  * @author Jakob Huuse
  * @version 1.0.1
- * @since 03.12.2023
+ * @since 05.12.2023
  */
 public class TrainDepartureTest {
 
-  TrainDeparture testObj;
-  TrainDeparture secondTestObj;
+  private TrainDeparture testObj;
+  private TrainDeparture secondTestObj;
 
   @BeforeEach
   void setup() {

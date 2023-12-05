@@ -44,13 +44,13 @@ import org.junit.jupiter.api.Test;
  *
  * @author Jakob Huuse
  * @version 1.0.1
- * @since 04.11.2023
+ * @since 05.11.2023
  */
 public class TrainDepartureRegisterTest {
-  TrainDepartureRegister testObj;
-  TrainDeparture testDeparture1;
-  TrainDeparture testDeparture2;
-  TrainDeparture testDeparture3;
+  private TrainDepartureRegister testObj;
+  private TrainDeparture testDeparture1;
+  private TrainDeparture testDeparture2;
+  private TrainDeparture testDeparture3;
 
   @BeforeEach
   void setup() {
