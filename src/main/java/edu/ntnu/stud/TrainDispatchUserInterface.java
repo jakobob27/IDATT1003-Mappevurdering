@@ -1,6 +1,5 @@
 package edu.ntnu.stud;
 
-import java.lang.reflect.Array;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -22,7 +21,7 @@ public class TrainDispatchUserInterface {
   private TrainDepartureRegister register;
   private TramClock time;
 
-  private Scanner inp;
+  private Scanner input;
 
   /**
    * Initializes the fields with some test values. Also adds the register as a listener of time.
@@ -45,7 +44,8 @@ public class TrainDispatchUserInterface {
    */
   public void start() {
     while (true) {
-      System.out.println("\nWhat do you want to do?");
+      System.out.println(
+          "\nWhat do you want to do? (Type the number with the function you want to use");
       System.out.println("1. Print departures");
       System.out.println("2. Create new train departure");
       System.out.println("3. Search departure by destination");
@@ -54,21 +54,21 @@ public class TrainDispatchUserInterface {
       System.out.println("6. Add delay to departure");
       System.out.println("7. Update clock");
       System.out.println("9. Exit");
-      inp = new Scanner(System.in);
+      input = new Scanner(System.in);
       try {
-        switch (inp.nextInt()) {
+        switch (input.nextInt()) {
           case 1 -> System.out.println(this);
           case 2 -> {
             LocalTime departureTime = askTime("When is the departure time?");
             System.out.println("What is the line number?");
-            String lineNr = inp.nextLine();
+            String lineNr = input.nextLine();
             System.out.println("What is the train number?");
-            String trainNr = inp.nextLine();
+            String trainNr = input.nextLine();
             System.out.println("What is the destination?");
-            String destination = inp.nextLine();
+            String destination = input.nextLine();
             System.out.println(
                 "What track is it on? (Type an integer equal or lower than 0 if undefined)");
-            int track = inp.nextInt();
+            int track = input.nextInt();
             if (track <= 0) {
               register.addTrainDeparture(
                   new TrainDeparture(departureTime, lineNr, trainNr, destination));
@@ -79,8 +79,8 @@ public class TrainDispatchUserInterface {
           }
           case 3 -> {
             System.out.println("What destination are you searching after?");
-            inp = new Scanner(System.in);
-            String searchDestination = inp.nextLine();
+            input = new Scanner(System.in);
+            String searchDestination = input.nextLine();
             ArrayList<TrainDeparture> foundDestinations =
                 register.searchDestination(searchDestination);
             if (foundDestinations.isEmpty()) {
@@ -98,12 +98,11 @@ public class TrainDispatchUserInterface {
                 System.out.println(departure);
               }
             }
-            System.out.println("\n");
           }
           case 4 -> {
             System.out.println("What train number are you searching after?");
-            inp = new Scanner(System.in);
-            String searchTrainNr = inp.nextLine();
+            input = new Scanner(System.in);
+            String searchTrainNr = input.nextLine();
             register.searchTrainNumber(searchTrainNr);
             StringBuilder searchNumberString =
                 new StringBuilder("Departure with train number " + searchTrainNr);
@@ -117,10 +116,10 @@ public class TrainDispatchUserInterface {
           }
           case 5 -> {
             System.out.println("What train number has the departure you want to switch tracks on?");
-            inp = new Scanner(System.in);
-            String trackTrainNr = inp.nextLine();
+            input = new Scanner(System.in);
+            String trackTrainNr = input.nextLine();
             System.out.println("What track do you want to switch to?");
-            int swapTrack = inp.nextInt();
+            int swapTrack = input.nextInt();
             register.searchTrainNumber(trackTrainNr).setTrack(swapTrack);
             System.out.println(
                 "Successfully swapped departure with train number " + trackTrainNr + " to track "
@@ -128,8 +127,8 @@ public class TrainDispatchUserInterface {
           }
           case 6 -> {
             System.out.println("What train number has the departure you want to add delay to?");
-            inp = new Scanner(System.in);
-            String delayTrainNr = inp.nextLine();
+            input = new Scanner(System.in);
+            String delayTrainNr = input.nextLine();
             LocalTime delay = askTime("What is the delay?");
             register.searchTrainNumber(delayTrainNr).setDelay(delay);
             System.out.println(
@@ -161,8 +160,8 @@ public class TrainDispatchUserInterface {
    */
   private LocalTime askTime(String message) {
     System.out.println(message + " (Give time in the format hh:mm)");
-    inp = new Scanner(System.in);
-    String clockInput = inp.nextLine();
+    input = new Scanner(System.in);
+    String clockInput = input.nextLine();
     String[] splitClockInput = clockInput.split(":");
 
     return LocalTime.of(Integer.parseInt(splitClockInput[0]),

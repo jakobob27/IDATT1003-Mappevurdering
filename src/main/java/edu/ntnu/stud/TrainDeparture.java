@@ -46,21 +46,15 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
 
 
   /**
-   * Validates that the departureTime is in the right format.
+   * Validates that the LocalTime object is in the right format.
    *
-   * <p>The other fields in this object are in their correct format as given that
-   * they are their designated type.
-   *
-   * <p>Throws IllegalArgumentExceptions with fitting messages if one of the parameters
-   * is not in the right format.
-   *
-   * @param departureTime a localTime object that cannot contain time-units lower than minutes
-   * @throws IllegalArgumentException if one of the parameters are not in a valid format
+   * @param time a localTime object.
+   * @throws IllegalArgumentException if the LocalTime object contains units lower than minutes.
    */
-  private void validator(LocalTime departureTime) {
-    if (departureTime.getSecond() != 0 || departureTime.getNano() != 0) {
+  private void checkTime(LocalTime time) {
+    if (time.getSecond() != 0 || time.getNano() != 0) {
       throw new IllegalArgumentException(
-          "departureTime cannot contain time-units lower than minutes!");
+          "Cannot use time-units lower than minutes!");
     }
 
   }
@@ -73,7 +67,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    * @throws IllegalArgumentException if the int given is not a positive integer or track has
    *                                  already been set.
    */
-  public void checkTrack(int track) {
+  private void checkTrack(int track) {
     if (track < 1) {
       throw new IllegalArgumentException("The track must be a positive integer!");
     }
@@ -89,7 +83,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    */
   public TrainDeparture(LocalTime departureTime, String line, String trainNumber,
                         String destination) {
-    validator(departureTime);
+    checkTime(departureTime);
     this.departureTime = departureTime;
     this.line = line;
     this.trainNumber = trainNumber;
@@ -157,6 +151,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
   }
 
   public void setDelay(LocalTime delay) {
+    checkTime(delay);
     this.delay = delay;
   }
 

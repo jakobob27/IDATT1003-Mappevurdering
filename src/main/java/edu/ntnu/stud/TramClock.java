@@ -27,7 +27,7 @@ public class TramClock {
    * @param clock A localtime object that doesn't contain units lower than minutes
    * @throws IllegalArgumentException if the given LocalTime object has units lower than minutes
    */
-  public void validator(LocalTime clock) {
+  private void validator(LocalTime clock) {
     if (clock.getSecond() != 0 || clock.getNano() != 0) {
       throw new IllegalArgumentException(
           "clock cannot contain time-units lower than minutes!");
