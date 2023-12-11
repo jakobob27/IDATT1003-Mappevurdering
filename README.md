@@ -1,31 +1,22 @@
-# Portfolio project IDATA1003 - 2023
-This file uses Mark Down syntax. For more information see [here](https://www.markdownguide.org/basic-syntax/).
+# Portfolio project IDATT1003 - 2023
 
-STUDENT NAME = "Your name"  
-STUDENT ID = "Your ID"
+
+STUDENT NAME = Jakob Huuse  
+STUDENT ID = 593045
 
 ## Project description
-
-[//]: # (TODO: Write a short description of your project/product here.)
+This project is made as my final project in IDATT1003. It is a train-dispatch system.
 
 ## Project structure
-
-[//]: # (TODO: Describe the structure of your project here. How have you used packages in your structure. Where are all sourcefiles stored. Where are all JUnit-test classes stored. etc.)
+All the source-files for the program can be found in the package edu.ntnu.stud in src/main/java. 
+<p>All the unit tests can be found in the package edu.ntnu.stud in src/test/java</p>
 
 ## Link to repository
-
-[//]: # (TODO: Include a link to your repository here.)
+https://github.com/jakobob27/IDATT1003-Mappevurdering
 
 ## How to run the project
-
-[//]: # (TODO: Describe how to run your project here. What is the main class? What is the main method?
-What is the input and output of the program? What is the expected behaviour of the program?)
+You run the program by running the main-method found in TrainDispatchApp. You will know if the program is running if it has printed a menu in the terminal.
 
 ## How to run the tests
+All the tests are written with JUnit 5. You can either run the entire test-class to test the entire class, or run the methods to test specific methods.
 
-[//]: # (TODO: Describe how to run the tests here.)
-
-## References
-
-[//]: # (TODO: Include references here, if any. For example, if you have used code from the course book, include a reference to the chapter.
-Or if you have used code from a website or other source, include a link to the source.)
