@@ -13,15 +13,27 @@ import java.util.Scanner;
  * <p>The time field is of the type TramClock,
  * and will manage the time of the application.
  *
+ * <p>The input field is of the type Scanner, and it will read the user input.
+ *
+ * <p>Lastly, there is multiple final static int used for the switch-cases.
+ *
  * @author Jakob Huuse
- * @version 1.0.0
- * @since 04.12.2023
+ * @version 1.0.1
+ * @since 11.12.2023
  */
 public class TrainDispatchUserInterface {
   private TrainDepartureRegister register;
   private TramClock time;
-
   private Scanner input;
+
+  private final static int PRINT_DEPARTURES = 1;
+  private final static int NEW_DEPARTURE = 2;
+  private final static int SEARCH_DESTINATION = 3;
+  private final static int SEARCH_TRAIN_NUMBER = 4;
+  private final static int ASSIGN_TRACK = 5;
+  private final static int ADD_DELAY = 6;
+  private final static int UPDATE_CLOCK = 7;
+  private final static int EXIT = 9;
 
   /**
    * Initializes the fields with some test values. Also adds the register as a listener of time.
@@ -57,8 +69,8 @@ public class TrainDispatchUserInterface {
       input = new Scanner(System.in);
       try {
         switch (input.nextInt()) {
-          case 1 -> System.out.println(this);
-          case 2 -> {
+          case PRINT_DEPARTURES -> System.out.println(this);
+          case NEW_DEPARTURE -> {
             LocalTime departureTime = askTime("When is the departure time?");
             System.out.println("What is the line number?");
             String lineNr = input.nextLine();
@@ -77,7 +89,7 @@ public class TrainDispatchUserInterface {
                   new TrainDeparture(departureTime, lineNr, trainNr, destination, track));
             }
           }
-          case 3 -> {
+          case SEARCH_DESTINATION -> {
             System.out.println("What destination are you searching after?");
             input = new Scanner(System.in);
             String searchDestination = input.nextLine();
@@ -99,7 +111,7 @@ public class TrainDispatchUserInterface {
               }
             }
           }
-          case 4 -> {
+          case SEARCH_TRAIN_NUMBER -> {
             System.out.println("What train number are you searching after?");
             input = new Scanner(System.in);
             String searchTrainNr = input.nextLine();
@@ -114,7 +126,7 @@ public class TrainDispatchUserInterface {
             System.out.println("-------------------------------------------------------------");
             System.out.println(register.searchTrainNumber(searchTrainNr));
           }
-          case 5 -> {
+          case ASSIGN_TRACK -> {
             System.out.println("What train number has the departure you want to switch tracks on?");
             input = new Scanner(System.in);
             String trackTrainNr = input.nextLine();
@@ -125,7 +137,7 @@ public class TrainDispatchUserInterface {
                 "Successfully swapped departure with train number " + trackTrainNr + " to track "
                     + swapTrack + "!");
           }
-          case 6 -> {
+          case ADD_DELAY -> {
             System.out.println("What train number has the departure you want to add delay to?");
             input = new Scanner(System.in);
             String delayTrainNr = input.nextLine();
@@ -135,11 +147,11 @@ public class TrainDispatchUserInterface {
                 "Successfully set delay of departure with train number " + delayTrainNr + " to "
                     + register.searchTrainNumber(delayTrainNr).getDelay() + "!");
           }
-          case 7 -> {
+          case UPDATE_CLOCK -> {
             time.setTime(askTime("What do you want to set the time to?"));
             System.out.println(time);
           }
-          case 9 -> {
+          case EXIT -> {
             return;
           }
           default -> System.out.println("Please give an integer on the list!");

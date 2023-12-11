@@ -32,8 +32,8 @@ import java.time.LocalTime;
  * If no delay is set, the delay is 00:00
  *
  * @author Jakob Huuse
- * @version 1.0.1
- * @since 03.12.2023
+ * @version 1.0.2
+ * @since 11.12.2023
  */
 public class TrainDeparture implements Comparable<TrainDeparture> {
 
@@ -103,8 +103,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
   public TrainDeparture(LocalTime departureTime, String line, String trainNumber,
                         String destination, int track) {
     this(departureTime, line, trainNumber, destination);
-    checkTrack(track);
-    this.track = track;
+    setTrack(track);
   }
 
   public LocalTime getDepartureTime() {
