@@ -43,8 +43,8 @@ import org.junit.jupiter.api.Test;
  * <p>Lastly, it checks if the toString() method gives the expected output.
  *
  * @author Jakob Huuse
- * @version 1.0.1
- * @since 05.11.2023
+ * @version 1.0.2
+ * @since 11.12.2023
  */
 public class TrainDepartureRegisterTest {
   private TrainDepartureRegister testObj;
@@ -110,7 +110,11 @@ public class TrainDepartureRegisterTest {
     expectedArrayList.add(testDeparture3);
     expectedArrayList.add(testDeparture2);
     assertEquals(expectedArrayList, testObj.searchDestination("Trondheim"));
-    assertEquals(new ArrayList<>(), testObj.searchDestination("No man's land"));
+    Exception searchDestinationException = assertThrows(IllegalArgumentException.class,
+        () -> testObj.searchDestination("No mans land"));
+    assertEquals("That destination is not in the register!",
+        searchDestinationException.getMessage()
+    );
   }
 
   @Test
@@ -120,9 +124,6 @@ public class TrainDepartureRegisterTest {
     expectedArrayList.add(testDeparture2);
     testObj.removeExpiredDepartures(LocalTime.of(14, 0));
     assertEquals(expectedArrayList, testObj.searchDestination("Trondheim"));
-
-    testObj.removeExpiredDepartures(LocalTime.of(15, 30));
-    assertEquals(new ArrayList<>(), testObj.searchDestination("Trondheim"));
   }
 
   @Test

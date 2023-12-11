@@ -4,6 +4,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * The TrainDepartureRegister class is responsible for managing a collection
@@ -13,8 +16,8 @@ import java.util.HashMap;
  * a String with the train number to the TrainDeparture value attached to the key.
  *
  * @author Jakob Huuse
- * @version 1.0.0
- * @since 04.12.2023
+ * @version 1.1.0
+ * @since 11.12.2023
  */
 public class TrainDepartureRegister implements TramClockListener {
   private final HashMap<String, TrainDeparture> register;
@@ -34,24 +37,25 @@ public class TrainDepartureRegister implements TramClockListener {
    * @throws IllegalArgumentException If the given TrainDeparture uses the same train number
    *                                  of another departure that is in the register.
    *                                  Also throws if two departures have the same departure time
-   *                                  and has the same track or line.
+   *                                  and the same track or line.
    */
   public void addTrainDeparture(TrainDeparture departure) {
     if (register.containsKey(departure.getTrainNumber())) {
       throw new IllegalArgumentException("The train number is already being used!");
     }
-    for (TrainDeparture i : register.values()) {
-      if (i.getDepartureTime().equals(departure.getDepartureTime())) {
-        if (i.getTrack() == departure.getTrack()) {
+
+    register.values().forEach(value -> {
+      if (value.getDepartureTime().equals(departure.getDepartureTime())) {
+        if (value.getTrack() == departure.getTrack()) {
           throw new IllegalArgumentException(
               "There can't be two trains on one track at the same departure time!");
         }
-        if (i.getLine().equals(departure.getLine())) {
+        if (value.getLine().equals(departure.getLine())) {
           throw new IllegalArgumentException(
               ("There can't be two trains with the same line at the same departure time!"));
         }
       }
-    }
+    });
     register.put(departure.getTrainNumber(), departure);
   }
 
@@ -72,21 +76,22 @@ public class TrainDepartureRegister implements TramClockListener {
 
   /**
    * Searches after TrainDeparture objects with the given destination
-   * by iterating over all the TrainDeparture objects in the register, ignoring capitalization.
-   * If the destination of a TrainDeparture object matches the given
-   * destination it is added to a temporary ArrayList. It is then sorted.
+   * by using stream with filter, ignoring capitalization.
+   * The list is then sorted.
    *
    * @param destination A string that describes
-   *                    the destination of the TrainDeparture objects you want to find
-   * @return A sorted temporary ArrayList
-   *        containing the TrainDeparture objects with the given destination
+   *                    the destination of the TrainDeparture objects you want to find.
+   * @return A sorted temporary List
+   *        containing the TrainDeparture objects with the given destination.
+   * @throws IllegalArgumentException if the destination is not in the register.
    */
-  public ArrayList<TrainDeparture> searchDestination(String destination) {
-    ArrayList<TrainDeparture> temp = new ArrayList<>();
-    for (TrainDeparture departure : register.values()) {
-      if (departure.getDestination().equalsIgnoreCase(destination)) {
-        temp.add(departure);
-      }
+  public List<TrainDeparture> searchDestination(String destination) {
+    List<TrainDeparture> temp =
+        register.values().stream()
+            .filter(value -> value.getDestination().equalsIgnoreCase(destination))
+            .collect(Collectors.toList());
+    if (temp.isEmpty()) {
+      throw new IllegalArgumentException("That destination is not in the register!");
     }
     Collections.sort(temp);
     return temp;
@@ -94,19 +99,17 @@ public class TrainDepartureRegister implements TramClockListener {
 
   /**
    * Removes expired TrainDeparture objects from the register
-   * by iterating over a copy the TrainDeparture objects in the register
-   * and checks if the actual departureTime is before the current time.
-   * If it is, it is removed from the register.
+   * by creating a temporary filtered map, then replacing the register with that filtered map.
    *
    * @param clock A LocalTime object that describes the current time.
    */
   public void removeExpiredDepartures(LocalTime clock) {
-    HashMap<String, TrainDeparture> registerCopy = new HashMap<>(register);
-    for (TrainDeparture departure : registerCopy.values()) {
-      if (departure.getActualDepartureTime().isBefore(clock)) {
-        register.remove(departure.getTrainNumber());
-      }
-    }
+    Map<String, TrainDeparture> temp = register.entrySet().stream()
+        .filter(entry -> entry.getValue().getActualDepartureTime().isAfter(clock))
+        .collect(Collectors.toMap(
+            Map.Entry::getKey, Map.Entry::getValue));
+    register.clear();
+    register.putAll(temp);
   }
 
   /**

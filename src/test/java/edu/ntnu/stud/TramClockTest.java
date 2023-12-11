@@ -26,13 +26,11 @@ import org.junit.jupiter.api.Test;
  * when trying to add 24 hours or more.
  *
  * @author Jakob Huuse
- * @version 1.0.0
- * @since 30.11.2023
+ * @version 1.0.1
+ * @since 11.12.2023
  */
 public class TramClockTest {
   private TramClock test;
-  private TrainDepartureRegister testRegister;
-
   @BeforeEach
   void setup() {
     test = new TramClock(LocalTime.of(6, 0));
@@ -51,11 +49,15 @@ public class TramClockTest {
   @Test
   @DisplayName("Test listeners")
   void testListener() {
-    testRegister = new TrainDepartureRegister();
+    TrainDepartureRegister testRegister = new TrainDepartureRegister();
     test.addListener(testRegister);
     testRegister.addTrainDeparture(new TrainDeparture(LocalTime.of(7, 0), "L2", "27", "Trondheim"));
+    TrainDeparture testDeparture = new TrainDeparture(LocalTime.of(11, 0), "L2", "67", "Oslo");
+    testRegister.addTrainDeparture(testDeparture);
     test.setTime(LocalTime.of(10, 0));
-    assertEquals(new ArrayList<>(), testRegister.searchDestination("Trondheim"));
+    ArrayList<TrainDeparture> expectedArrayList = new ArrayList<>();
+    expectedArrayList.add(testDeparture);
+    assertEquals(expectedArrayList, testRegister.sortByTime());
   }
 
   @Test

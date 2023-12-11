@@ -2,6 +2,7 @@ package edu.ntnu.stud;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -18,22 +19,21 @@ import java.util.Scanner;
  * <p>Lastly, there is multiple final static int used for the switch-cases.
  *
  * @author Jakob Huuse
- * @version 1.0.1
+ * @version 1.0.2
  * @since 11.12.2023
  */
 public class TrainDispatchUserInterface {
   private TrainDepartureRegister register;
   private TramClock time;
   private Scanner input;
-
-  private final static int PRINT_DEPARTURES = 1;
-  private final static int NEW_DEPARTURE = 2;
-  private final static int SEARCH_DESTINATION = 3;
-  private final static int SEARCH_TRAIN_NUMBER = 4;
-  private final static int ASSIGN_TRACK = 5;
-  private final static int ADD_DELAY = 6;
-  private final static int UPDATE_CLOCK = 7;
-  private final static int EXIT = 9;
+  private static final int PRINT_DEPARTURES = 1;
+  private static final int NEW_DEPARTURE = 2;
+  private static final int SEARCH_DESTINATION = 3;
+  private static final int SEARCH_TRAIN_NUMBER = 4;
+  private static final int ASSIGN_TRACK = 5;
+  private static final int ADD_DELAY = 6;
+  private static final int UPDATE_CLOCK = 7;
+  private static final int EXIT = 9;
 
   /**
    * Initializes the fields with some test values. Also adds the register as a listener of time.
@@ -57,7 +57,7 @@ public class TrainDispatchUserInterface {
   public void start() {
     while (true) {
       System.out.println(
-          "\nWhat do you want to do? (Type the number with the function you want to use");
+          "\nWhat do you want to do? (Type the number with the function you want to use)");
       System.out.println("1. Print departures");
       System.out.println("2. Create new train departure");
       System.out.println("3. Search departure by destination");
@@ -93,22 +93,20 @@ public class TrainDispatchUserInterface {
             System.out.println("What destination are you searching after?");
             input = new Scanner(System.in);
             String searchDestination = input.nextLine();
-            ArrayList<TrainDeparture> foundDestinations =
+            final List<TrainDeparture> foundDestinations =
                 register.searchDestination(searchDestination);
-            if (foundDestinations.isEmpty()) {
-              System.out.println("No departures going to that destination!");
-            } else {
-              StringBuilder searchString =
-                  new StringBuilder("Departures going to " + searchDestination);
-              while (searchString.length() < 36) {
-                searchString.append(" ");
-              }
-              searchString.append("Delay     Track     ETA");
-              System.out.println(searchString);
-              System.out.println("-------------------------------------------------------------");
-              for (TrainDeparture departure : foundDestinations) {
-                System.out.println(departure);
-              }
+
+            StringBuilder searchString =
+                new StringBuilder("Departures going to " + searchDestination);
+            while (searchString.length() < 36) {
+              searchString.append(" ");
+            }
+            searchString.append("Delay     Track     ETA");
+            System.out.println(searchString);
+            System.out.println("-------------------------------------------------------------");
+            for (TrainDeparture departure : foundDestinations) {
+              System.out.println(departure);
+
             }
           }
           case SEARCH_TRAIN_NUMBER -> {
