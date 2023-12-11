@@ -22,15 +22,17 @@ import org.junit.jupiter.api.Test;
  * when called.
  *
  * <p>It tests the addTime method by first checking if the added time adds up to the expected time.
- * Then it checks if the addTime method throws IllegalArgumentException
- * when trying to add 24 hours or more.
+ * Then it checks if the addTime method throws IllegalArgumentException when trying to add 24 hours
+ * or more.
  *
  * @author Jakob Huuse
  * @version 1.0.1
  * @since 11.12.2023
  */
 public class TramClockTest {
+
   private TramClock test;
+
   @BeforeEach
   void setup() {
     test = new TramClock(LocalTime.of(6, 0));
@@ -67,7 +69,7 @@ public class TramClockTest {
     assertEquals("The time is 08:06", test.toString());
 
     Exception addTimeException = assertThrows(IllegalArgumentException.class,
-        () -> test.setTime(LocalTime.of(7,0)),
+        () -> test.setTime(LocalTime.of(7, 0)),
         "method should trow");
     assertEquals(addTimeException.getMessage(),
         "Cannot set the clock to an earlier time!");
