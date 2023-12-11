@@ -18,12 +18,14 @@ import java.time.LocalTime;
  * that describes the time the train departs in the format HH:mm
  *
  * <p>line - A final string that defines the route the train is running
- * in the format of "L1", "F4" etc.
+ * in the format of "L1", "F4" etc. It can not have more than 5 characters.
  *
  * <p>trainNumber - A final string
  * with a unique number within a 24-hour window in the format "602", "45", "1951" etc.
+ * It can not have more than 5 characters.
  *
  * <p>destination -  A final string that describes the train-departures destination.
+ * It can not have more than 15 characters.
  *
  * <p>track - An integer that describes which track the train-departure is running on.
  * If the track is not defined the value is set to -1.
@@ -32,15 +34,15 @@ import java.time.LocalTime;
  * If no delay is set, the delay is 00:00
  *
  * @author Jakob Huuse
- * @version 1.0.2
+ * @version 1.0.3
  * @since 11.12.2023
  */
 public class TrainDeparture implements Comparable<TrainDeparture> {
 
-  private final LocalTime departureTime;
-  private final String line;
+  private LocalTime departureTime;
+  private String line;
   private final String trainNumber;
-  private final String destination;
+  private String destination;
   private int track = -1;
   private LocalTime delay = LocalTime.MIDNIGHT;
 
@@ -60,34 +62,22 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
   }
 
   /**
-   * Checks if the given track is a positive integer, and throws IllegalArgumentException if it's
-   * not.
-   *
-   * @param track a positive integer
-   * @throws IllegalArgumentException if the int given is not a positive integer or track has
-   *                                  already been set.
-   */
-  private void checkTrack(int track) {
-    if (track < 1) {
-      throw new IllegalArgumentException("The track must be a positive integer!");
-    }
-  }
-
-  /**
    * A constructor for a TrainDeparture object that doesn't define which track it is on.
    *
    * @param departureTime a localTime object that cannot contain time-units lower than minutes
-   * @param line          a String that describes the line
-   * @param trainNumber   a String that describes the train number
-   * @param destination   a String that describes the destination
+   * @param line          a String that describes the line, no longer than 5 characters
+   * @param trainNumber   a String that describes the train number, no longer than 5 characters
+   * @param destination   a String that describes the destination, no longer than 15 characters
    */
   public TrainDeparture(LocalTime departureTime, String line, String trainNumber,
                         String destination) {
-    checkTime(departureTime);
-    this.departureTime = departureTime;
-    this.line = line;
+    if (trainNumber.length() > 5) {
+      throw new IllegalArgumentException("Train-number cannot be longer than 5 characters!");
+    }
+    setDepartureTime(departureTime);
+    setLine(line);
     this.trainNumber = trainNumber;
-    this.destination = destination;
+    setDestination(destination);
   }
 
   /**
@@ -139,13 +129,34 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
     return departureTime.plusHours(delay.getHour()).plusMinutes(delay.getMinute());
   }
 
+  private void setDepartureTime(LocalTime departureTime) {
+    checkTime(departureTime);
+    this.departureTime = departureTime;
+  }
+
+  private void setDestination(String destination) {
+    if (destination.length() > 15) {
+      throw new IllegalArgumentException("Destination names cannot be longer than 15 characters!");
+    }
+    this.destination = destination;
+  }
+
+  private void setLine(String line) {
+    if (line.length() > 5) {
+      throw new IllegalArgumentException("Line-number cannot be longer than 5 characters!");
+    }
+    this.line = line;
+  }
+
   /**
-   * Checks if the parameter is valid, then sets the track to the parameter.
+   * Checks if the parameter is a positive integer, then sets the track to the parameter.
    *
-   * @param track a positive integer
+   * @param track A positive integer.
    */
   public void setTrack(int track) {
-    checkTrack(track);
+    if (track < 1) {
+      throw new IllegalArgumentException("The track must be a positive integer!");
+    }
     this.track = track;
   }
 
@@ -161,27 +172,27 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    */
   @Override
   public String toString() {
-    StringBuilder temp = new StringBuilder(departureTime + "   " + line);
+    StringBuilder temp = new StringBuilder(getDepartureTime() + "   " + getLine());
     while (temp.length() < 14) {
       temp.append(" ");
     }
-    temp.append(trainNumber);
+    temp.append(getTrainNumber());
     while (temp.length() < 20) {
       temp.append(" ");
     }
-    temp.append(destination);
+    temp.append(getDestination());
     while (temp.length() < 36) {
       temp.append(" ");
     }
 
-    if (!delay.equals(LocalTime.MIDNIGHT)) {
-      temp.append(delay);
+    if (!getDelay().equals(LocalTime.MIDNIGHT)) {
+      temp.append(getDelay());
     }
     while (temp.length() < 46) {
       temp.append(" ");
     }
-    if (track != -1) {
-      temp.append(track);
+    if (getTrack() != -1) {
+      temp.append(getTrack());
     }
     while (temp.length() < 56) {
       temp.append(" ");

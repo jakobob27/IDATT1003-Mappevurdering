@@ -33,8 +33,8 @@ import org.junit.jupiter.api.Test;
  * the expected output.
  *
  * @author Jakob Huuse
- * @version 1.0.1
- * @since 05.12.2023
+ * @version 1.0.2
+ * @since 11.12.2023
  */
 public class TrainDepartureTest {
 
@@ -62,13 +62,40 @@ public class TrainDepartureTest {
   }
 
   @Test
-  @DisplayName("Check if the validator works")
+  @DisplayName("Check if the constructor throws")
   void testValidator() {
     Exception departureTimeException = assertThrows(IllegalArgumentException.class,
         () -> new TrainDeparture(LocalTime.of(13, 25, 22), "F14", "608", "Drammen"),
-        "Validator should throw");
-    assertEquals(departureTimeException.getMessage(),
-        "Cannot use time-units lower than minutes!");
+        "Constructor should throw");
+    assertEquals("Cannot use time-units lower than minutes!", departureTimeException.getMessage()
+    );
+
+    Exception lineException = assertThrows(IllegalArgumentException.class,
+        () -> new TrainDeparture(LocalTime.of(13, 25), "F14235", "608", "Drammen"),
+        "Constructor should throw");
+    assertEquals("Line-number cannot be longer than 5 characters!", lineException.getMessage()
+    );
+
+    Exception trainNumberException = assertThrows(IllegalArgumentException.class,
+        () -> new TrainDeparture(LocalTime.of(13, 25), "F14", "608113", "Drammen"),
+        "Constructor should throw");
+    assertEquals("Train-number cannot be longer than 5 characters!",
+        trainNumberException.getMessage()
+    );
+
+    Exception destinationException = assertThrows(IllegalArgumentException.class,
+        () -> new TrainDeparture(LocalTime.of(13, 25), "F14", "608",
+            "LLANFAIRPWLLGWYNGYLLGOGERYCHWYRNDROBWLLLLANTYSILIOGOGOGOCH"),
+        "Constructor should throw");
+    assertEquals("Destination names cannot be longer than 15 characters!",
+        destinationException.getMessage()
+    );
+
+    Exception trackException = assertThrows(IllegalArgumentException.class,
+        () -> new TrainDeparture(LocalTime.of(13, 25), "F14", "608", "Drammen", -1),
+        "Constructor should throw");
+    assertEquals("The track must be a positive integer!", trackException.getMessage()
+    );
   }
 
   @Test
