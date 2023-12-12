@@ -71,11 +71,11 @@ public class TrainDispatchUserInterface {
           case PRINT_DEPARTURES -> System.out.println(this);
           case NEW_DEPARTURE -> {
             LocalTime departureTime = askTime("When is the departure time?");
-            System.out.println("What is the line number?");
+            System.out.println("What is the line number? (Max 5 characters)");
             String lineNr = input.nextLine();
-            System.out.println("What is the train number?");
+            System.out.println("What is the train number? (Max 5 characters)");
             String trainNr = input.nextLine();
-            System.out.println("What is the destination?");
+            System.out.println("What is the destination? (Max 15 characters)");
             String destination = input.nextLine();
             System.out.println(
                 "What track is it on? (Type an integer equal or lower than 0 if undefined)");
