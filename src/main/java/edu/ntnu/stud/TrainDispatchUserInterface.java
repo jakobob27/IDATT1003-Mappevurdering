@@ -19,7 +19,7 @@ import java.util.Scanner;
  *
  * @author Jakob Huuse
  * @version 1.0.2
- * @since 11.12.2023
+ * @since 12.12.2023
  */
 public class TrainDispatchUserInterface {
   private TrainDepartureRegister register;
